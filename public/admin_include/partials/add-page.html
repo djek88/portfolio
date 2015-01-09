@@ -1,0 +1,22 @@
+<!-- <div>{{all_albums}}</div> -->
+<div class="container altern">
+	<div class="row">
+		<form class="form-inline" name="albumForm" ng-submit="submitFormAlbum()">
+			<h2>Создайте новый альбом</h2>
+			<h4>Название Альбома: </h4>
+			<div class="alert alert-warning" role="alert" ng-hide="correctNameAlbum">{{message}}</div>
+			<input type="text" class="form-control input_nameAlbum" name="formInputName" ng-model="nameAlbum" ng-minlength="5" ng-maxlength="30" ng-pattern="/^[a-zA-Z]+[a-zA-Z1-9]*$/" required placeholder="пример: Album1" autofocus>
+			<input class="btn btn-success" type="submit" value="Создать">
+			{{all_albums}}	
+		</form>
+	</div>
+</div>
+<div class="container simple" ng-show="cameAnswer">
+	<div class="row" ng-hide="isExistAlbum">
+		<div class="bs-callout bs-callout-danger">Ни одного альбома нет. Создайте альбом.</div>
+	</div>
+	<div class="row" ng-show="isExistAlbum">
+		dfdfgdfgdf
+	</div>
+	{{isExistAlbum}}
+</div>
