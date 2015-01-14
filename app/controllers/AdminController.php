@@ -52,7 +52,9 @@ class AdminController extends BaseController {
 				'message'    => $message,
 				'all_albums' => $all_albums
 			);
-		} /*else if(Input::file() && Input::hasFile('my-file')) {
+		} else {
+			return var_dump( Input::all() );
+		}/*else if(Input::file() && Input::hasFile('my-file')) {
 			$title = Input::get('photo_title');
 			$desc = Input::get('photo_desc');
 			$album_id = Input::get('photo_album');

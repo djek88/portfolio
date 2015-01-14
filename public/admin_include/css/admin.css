@@ -3,22 +3,6 @@ body {
 	background-color: #2F3238;
 	color: #7F8289;
 }
-#console-tip-anchor {
-    position: fixed;
-    bottom: 0;
-    right:100px;
-    width: 10px;
-}
-
-.btn-std {
-    margin-left: 1em;
-    min-width: 100px;
-}
-
-.highlighted {
-    background-image: none;
-    background-color: honeydew !important;
-}
 .row {
 	padding: 30px;
 }
@@ -28,51 +12,24 @@ body {
 .altern  {
 	background-color: #26292E;
 }
-.form-control.input_nameAlbum, .form-control.input_description_photo {
+
+/*ADD ADMIN PAGE*/
+.form-control.input_nameAlbum {
 	width: 200px;
 }
-.input_title_photo {
-	width: 100px;
-}
-#img-container {
-    margin-top: 30px;
-    margin-bottom: 30px;
-    width: 430px;
-    min-height: 300px;
-    border: 2px solid #7F8289;
 
-}
-#img-list li {
-	margin: 10px;
-	/*float: left;*/
-	width: 152px;
-	/*height: 90px;*/
-	text-align: center;
-	/*border: 1px solid #888888;*/
-	display: inline-block;
-}
-
-#img-list div.progres {
-	width: 150px;
-	border: 1px solid #888888;
-	height: 18px;
-	text-align: center;
-	background-image: url('../img/pbar_bgr.png');
-	background-repeat: no-repeat;
-	background-position: -150px center;
-}
-
-.bs-callout {
+.bs-callout-danger {
 	padding: 20px;
 	margin: 20px 0;
 	border: 1px solid #E09B9B;
 	border-left-width: 5px;
 	border-radius: 3px;
-}
-.bs-callout-danger {
 	border-left-color: #d9534f;
 	background-color: #FFDBDB;
 }
+
+.my-drop-zone { border: dotted 3px lightgray; }
+.another-file-over-class { border: dotted 3px green; }
 
 .table {
 	table-layout: fixed;
@@ -87,8 +44,95 @@ table, th {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+canvas {
+	background-color: #f3f3f3;
+	-webkit-box-shadow: 3px 3px 3px 0 #e3e3e3;
+	-moz-box-shadow: 3px 3px 3px 0 #e3e3e3;
+	box-shadow: 3px 3px 3px 0 #e3e3e3;
+	border: 1px solid #c3c3c3;
+	margin: 6px 0 0 6px;
+}
+.description_block {
+	position: absolute;
+}
+.input_titlePhoto, .input_descriptionPhoto, .input_albumPhoto {
+	margin-top: 5px; 
+	margin-bottom: 5px;
+	height: 28px;
+	width: 200px;
+	position: relative;
+}
+.row-name {
+	width: 20%;
+}
+.row-description {
+	width: 20%;
+}
+.row-size {
+	width: 10%;
+}
+.row-progress {
+	width: 20%;
+}
+.row-status {
+	width: 5%;
+}
+.row-actions {
+	width: 25%;
+}
 
-.row-pre {
+/*//////////////////////////////////////////*/
+/*#console-tip-anchor {
+    position: fixed;
+    bottom: 0;
+    right:100px;
+    width: 10px;
+}*/
+
+/*.btn-std {
+    margin-left: 1em;
+    min-width: 100px;
+}*/
+
+/*.highlighted {
+    background-image: none;
+    background-color: honeydew !important;
+}*/
+
+
+/*.input_title_photo {
+	width: 100px;
+}*/
+/*
+#img-container {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 430px;
+    min-height: 300px;
+    border: 2px solid #7F8289;
+}*/
+
+/*#img-list li {*/
+	/*margin: 10px;*/
+	/*float: left;*/
+	/*width: 152px;*/
+	/*height: 90px;*/
+	/*text-align: center;*/
+	/*border: 1px solid #888888;*/
+	/*display: inline-block;*/
+/*}*/
+/*
+#img-list div.progres {
+	width: 150px;
+	border: 1px solid #888888;
+	height: 18px;
+	text-align: center;
+	background-image: url('../img/pbar_bgr.png');
+	background-repeat: no-repeat;
+	background-position: -150px center;
+}*/
+
+/*.row-pre {
 	width: 21%;
 }
 .row-fn {
@@ -111,17 +155,18 @@ table, th {
 }
 .row-can {
 	width: 2%;
-}
-.error_message {
-	color: red;
-}
-.successful-message {
-	color: green;
-}
+}*/
 
-.row-count-photo {
+/*.error_message {
+	color: red;
+}*/
+/*.successful-message {
+	color: green;
+}*/
+
+/*.row-count-photo {
 	width: 150px;
-}
-.row-delete-button {
+}*/
+/*.row-delete-button {
 	width: 100px;
-}
+}*/
