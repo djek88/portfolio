@@ -60,7 +60,8 @@ angular
 				name: 'imageFilter',
 				fn: function(item /*{File|FileLikeObject}*/ , options) {
 					var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-					return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+					/*Check the type file and file size*/
+					return ('|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1 && item.size/1024/1024 < 5);
 				}
 			});
 
@@ -70,6 +71,18 @@ angular
 			};
 			uploader.onAfterAddingFile = function(fileItem) {
 				fileItem.formData = [{title: '', description: '', album: ''}];
+				fileItem.isValidFields = true;
+				// Override "upload" method
+				var upload = fileItem.upload;
+				fileItem.upload = function() {
+					fileItem.isValidFields = (/^([a-zA-Z1-9]{5,30})$/.test(fileItem.formData[0].title) && /^([a-zA-Z1-9 ]{5,30})$/.test(fileItem.formData[0].description) && fileItem.formData[0].album != "");
+					if(fileItem.isValidFields) {
+						upload.call(fileItem);
+					} else {
+						upload.call(fileItem);
+						fileItem.cancel();
+					}
+				}
 				console.info('onAfterAddingFile', fileItem);
 			};
 			uploader.onAfterAddingAll = function(addedFileItems) {

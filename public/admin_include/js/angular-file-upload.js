@@ -33,7 +33,7 @@ module
 
     .value('fileUploaderOptions', {
         url: '/',
-        alias: 'file',
+        alias: 'my-file',
         headers: {},
         queue: [],
         progress: 0,
@@ -42,7 +42,7 @@ module
         method: 'POST',
         filters: [],
         formData: [],
-        queueLimit: Number.MAX_VALUE,
+        queueLimit: 10,
         withCredentials: false
     })
 
