@@ -52,19 +52,17 @@ class AdminController extends BaseController {
 				'message'    => $message,
 				'all_albums' => $all_albums
 			);
-		} else {
-			return var_dump( Input::all() );
-		}/*else if(Input::file() && Input::hasFile('my-file')) {
-			$title = Input::get('photo_title');
-			$desc = Input::get('photo_desc');
-			$album_id = Input::get('photo_album');
+		} else if(Input::file() && Input::hasFile('my-file')) {
+			$title = Input::get('title');
+			$desc = Input::get('description');
+			$album_id = Input::get('album');
 
 			$valid = Validator::make(
 				['title'    => $title,
 				 'desc'     => $desc,
 				 'album_id' => $album_id],
-				['title'    => 'required|min:5|max:25',
-				 'desc'     => 'required|min:10|max:100',
+				['title'    => ['regex:/^([a-zA-Z1-9]{5,30})$/'],
+				 'desc' => ['required', 'regex:/^([a-zA-Z1-9 ]{10,100})$/'],
 				 'album_id' => 'required|integer']
 			);
 
@@ -74,35 +72,31 @@ class AdminController extends BaseController {
 
 			try {
 				if($valid->fails()) {
-					throw new Exception("", 1);					
+					throw new Exception("Data not valid!");
 				} else {
 					$file->move($path_to_img, $new_file_name);
 
 					$response = Photo::add($title, $desc, $path_to_img.$new_file_name, $album_id);
 					if($response instanceof Exception) {
-						throw new Exception("", 0);
+						throw new Exception("Database error!");
 					}
-					echo json_encode(array(
-						'file' => "",
-						'post' => ""
-					));
+					return ['message' => "File success add!"];
 				}
 			} catch(Exception $e) {
 				if(File::exists($path_to_img.$new_file_name)) {
 					File::delete($path_to_img.$new_file_name);
 				}
-				echo json_encode(array(
-					'file' => "",
-					'post' => $e->getCode()
-				));
+				return ['message' => $e->getMessage(),
+				'error' => true];
 			}
-		}*/
+		}
 	}
 	
-	/*public function delete()
+	public function getDataDeletePage()
 	{
-		$albums_id_name = Albom::select_id_name_albom(); // array Album['id', 'name']
-		$albums_id_count = Photo::select(DB::raw(' id_albom as id, count(id_photo) as count'))->groupBy('id_albom')->get(); // array Photo['id', 'count']
+		$albums_id_name = Albom::select_id_name_albom(); // array Album['id', 'name'] массив всех альбомов
+		$albums_id_count = Photo::select(DB::raw(' id_albom as id, count(id_photo) as count'))
+										->groupBy('id_albom')->get(); // array Photo['id', 'count'] массив альбомов в которых есть фотографии 
 		$albums_id_count_name = array();
 		$albums_with_photos = array();
 
@@ -120,11 +114,9 @@ class AdminController extends BaseController {
 			}
 		}
 
-		return View::make('/deleteAdmin', array(
-			'all_albums' => $albums_id_count_name,
-			'albums_with_photos' => $albums_with_photos
-		));
-	}*/
+		return ['all_albums' => $albums_id_count_name,
+				'albums_with_photos' => $albums_with_photos];
+	}
 
 	/*public function deleteAlbumPhoto()
 	{

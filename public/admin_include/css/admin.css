@@ -62,22 +62,22 @@ canvas {
 	width: 200px;
 	position: relative;
 }
-.row-name {
+.col-name {
 	width: 20%;
 }
-.row-description {
+.col-description {
 	width: 20%;
 }
-.row-size {
+.col-size {
 	width: 10%;
 }
-.row-progress {
+.col-progress {
 	width: 15%;
 }
-.row-status {
+.col-status {
 	width: 8%;
 }
-.row-actions {
+.col-actions {
 	width: 27%;
 }
 

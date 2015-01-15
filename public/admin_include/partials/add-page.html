@@ -1,4 +1,3 @@
-<!-- <div>{{all_albums}}</div> -->
 <div class="container altern">
 	<div class="row">
 		<form class="form-inline" name="albumForm" ng-submit="submitFormAlbum()">
@@ -49,15 +48,15 @@
 				</button>
 			</div>
 		</div>
-		<table class="table">
+		<table class="table" ng-show="uploader.queue.length">
 			<thead>
 				<tr>
-					<th class="row-name">Имя</th>
-					<th class="row-description">Описание файла</th>
-					<th class="row-size" ng-show="uploader.isHTML5">Размер</th>
-					<th class="row-progress" ng-show="uploader.isHTML5">Прогресс</th>
-					<th class="row-status">Статус</th>
-					<th class="row-actions">Действия</th>
+					<th class="col-name">Имя</th>
+					<th class="col-description">Описание файла</th>
+					<th class="col-size" ng-show="uploader.isHTML5">Размер</th>
+					<th class="col-progress" ng-show="uploader.isHTML5">Прогресс</th>
+					<th class="col-status">Статус</th>
+					<th class="col-actions">Действия</th>
 				</tr>
 			</thead>
 			<tbody>

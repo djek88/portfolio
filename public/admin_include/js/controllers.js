@@ -42,6 +42,7 @@ angular
 					}).success(function(data) {
 						$scope.message = data.message;
 						$scope.all_albums = data.all_albums;
+						$scope.nameAlbum = "";
 						albumNotify(4000);
 					});
 				} else {
@@ -55,7 +56,7 @@ angular
 				url: '/admin/addPage'
 			});
 
-			// FILTERS
+				// filters
 			uploader.filters.push({
 				name: 'imageFilter',
 				fn: function(item /*{File|FileLikeObject}*/ , options) {
@@ -65,17 +66,20 @@ angular
 				}
 			});
 
-			// CALLBACKS
+				// callbacks
 			uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/ , filter, options) {
 				console.info('onWhenAddingFileFailed', item, filter, options);
 			};
 			uploader.onAfterAddingFile = function(fileItem) {
 				fileItem.formData = [{title: '', description: '', album: ''}];
 				fileItem.isValidFields = true;
+
 				// Override "upload" method
 				var upload = fileItem.upload;
 				fileItem.upload = function() {
-					fileItem.isValidFields = (/^([a-zA-Z1-9]{5,30})$/.test(fileItem.formData[0].title) && /^([a-zA-Z1-9 ]{5,30})$/.test(fileItem.formData[0].description) && fileItem.formData[0].album != "");
+					fileItem.isValidFields = (/^([a-zA-Z1-9]{5,30})$/.test(fileItem.formData[0].title) &&
+											  /^([a-zA-Z1-9 ]{10,100})$/.test(fileItem.formData[0].description) &&
+											  fileItem.formData[0].album != "");
 					if(fileItem.isValidFields) {
 						upload.call(fileItem);
 					} else {
@@ -83,6 +87,7 @@ angular
 						fileItem.cancel();
 					}
 				}
+
 				console.info('onAfterAddingFile', fileItem);
 			};
 			uploader.onAfterAddingAll = function(addedFileItems) {
@@ -107,19 +112,28 @@ angular
 				console.info('onCancelItem', fileItem, response, status, headers);
 			};
 			uploader.onCompleteItem = function(fileItem, response, status, headers) {
-				console.info('onCompleteItem', fileItem, response, status, headers);
+				console.info('onCompleteItem', response, status, headers);
 			};
 			uploader.onCompleteAll = function() {
 				console.info('onCompleteAll');
 			};
-
 			console.info('uploader', uploader);
 		}
 	])
 
-	.controller('DeletePageCtrl', ['$scope',
-		function($scope) {
-			$scope.delete = "deletepage";
+	.controller('DeletePageCtrl', ['$scope', '$http', '$timeout',
+		function($scope, $http, $timeout) {
+			//INITIAL DATA SECTION
+
+			$http.get('/admin/deletePage').success(function(data) {
+				$scope.all_albums = data.all_albums;
+				$scope.albums_with_photos = data.albums_with_photos;
+			});
+
+			//ALBUM SECTION
+
+			// проверить при добавлении фотографий что существует альбом с таким id
+			// сделать запрос на все альбомы
 		}
 	])
 
