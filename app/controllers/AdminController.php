@@ -74,6 +74,11 @@ class AdminController extends BaseController {
 				if($valid->fails()) {
 					throw new Exception("Data not valid!");
 				} else {
+					$ExistAlbum = isset(Albom::getAlbumById($album_id)[0]);
+					if(!$ExistAlbum) {
+						throw new Exception("Required album is not exist.");
+					}
+
 					$file->move($path_to_img, $new_file_name);
 
 					$response = Photo::add($title, $desc, $path_to_img.$new_file_name, $album_id);
@@ -91,8 +96,8 @@ class AdminController extends BaseController {
 			}
 		}
 	}
-	
-	public function getDataDeletePage()
+
+	private function getDataAboutAlbums()
 	{
 		$albums_id_name = Albom::select_id_name_albom(); // array Album['id', 'name'] массив всех альбомов
 		$albums_id_count = Photo::select(DB::raw(' id_albom as id, count(id_photo) as count'))
@@ -117,8 +122,20 @@ class AdminController extends BaseController {
 		return ['all_albums' => $albums_id_count_name,
 				'albums_with_photos' => $albums_with_photos];
 	}
+	
+	public function getDataDeletePage()
+	{
+		$pageData = array();
+		$dataAboutAlbums = $this->getDataAboutAlbums();
 
-	/*public function deleteAlbumPhoto()
+		$pageData['all_albums']	= $dataAboutAlbums['all_albums'];
+		$pageData['albums_with_photos'] = $dataAboutAlbums['albums_with_photos'];
+		$pageData['all_photos'] = Photo::get_all();
+
+		return $pageData;
+	}
+
+	public function deleteDataDeletePage()
 	{
 		if(Input::has('id_album')) {
 			$id_album = Input::get('id_album');
@@ -126,23 +143,25 @@ class AdminController extends BaseController {
 			$photos_ref = Photo::select('reference_img')->where('id_albom', '=', $id_album)->get();
 			$affectedRowsPhotos = Photo::deleteFromAlbum($id_album);
 			if($affectedRowsPhotos) {
-				for ($i=0; $i < count($photos_ref); $i++) { 
+				for ($i=0; $i<count($photos_ref); $i++) { 
 					if(File::exists($photos_ref[$i]['reference_img'])) {
 						File::delete($photos_ref[$i]['reference_img']);
 					}
 				}
 			}
 			$affectedRowsAlbums = Albom::deleteAlbum($id_album);
+			$dataAboutAlbums = $this->getDataAboutAlbums();
 			
-			echo json_encode(array(
-				'deletedPhotos' => $affectedRowsPhotos,
-				'isDeleteAlbum' => $affectedRowsAlbums
-			));
+			return ['isDeleteAlbum' 	 => $affectedRowsAlbums,
+					'deletedPhotos' 	 => $affectedRowsPhotos,
+					'all_albums'		 => $dataAboutAlbums['all_albums'],
+					'albums_with_photos' => $dataAboutAlbums['albums_with_photos']
+			];
 		}
 	}
 
 	public function edit()
 	{
 		return "В разработке...";
-	}*/
+	}
 }

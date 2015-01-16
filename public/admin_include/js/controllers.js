@@ -13,11 +13,11 @@ angular
 
 			$http.get('/admin/addPage').success(function(data) {
 				$scope.all_albums = data;
+				$scope.cameAnswer = true;
 			});
 
 			$scope.$watch("all_albums", function(newValue, oldValue) {
 				if (typeof newValue === "object") {
-					$scope.cameAnswer = true;
 					$scope.isExistAlbum = (newValue.length != 0);
 				}
 			});
@@ -62,7 +62,7 @@ angular
 				fn: function(item /*{File|FileLikeObject}*/ , options) {
 					var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
 					/*Check the type file and file size*/
-					return ('|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1 && item.size/1024/1024 < 5);
+					return ('|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1 && item.size/1024/1024 < 10);
 				}
 			});
 
@@ -124,16 +124,60 @@ angular
 	.controller('DeletePageCtrl', ['$scope', '$http', '$timeout',
 		function($scope, $http, $timeout) {
 			//INITIAL DATA SECTION
+			$scope.cameAnswer = false;
 
 			$http.get('/admin/deletePage').success(function(data) {
 				$scope.all_albums = data.all_albums;
 				$scope.albums_with_photos = data.albums_with_photos;
+				$scope.all_photos = data.all_photos;
+				$scope.cameAnswer = true;
 			});
 
-			//ALBUM SECTION
+			$scope.$watch("all_albums", function(newValue, oldValue) {
+				if (typeof newValue === "object") {
+					$scope.isExistAlbum = (newValue.length != 0);
+				}
+			});
 
-			// проверить при добавлении фотографий что существует альбом с таким id
-			// сделать запрос на все альбомы
+			$scope.$watch("all_photos", function(newValue, oldValue) {
+				if (typeof newValue === "object") {
+					$scope.isExistPhotos = (newValue.length != 0);
+				}
+			});
+			//ALBUM SECTION
+			$scope.message = "";
+			$scope.isAlbumDelete = true;
+
+			var albumNotify = function(time) {
+				$scope.isAlbumDelete = false;
+				$timeout(function() {
+					$scope.isAlbumDelete = true;
+				}, time);
+			}
+
+			$scope.deleteAlbum = function(id_album) {
+				$http.post('/admin/deletePage', {
+					'id_album': id_album
+				}).success(function(data) {
+					if(data.isDeleteAlbum) {
+						$scope.message = 'Альбом удален.';
+						$scope.all_albums = data.all_albums;
+						$scope.albums_with_photos = data.albums_with_photos;
+
+						if(data.deletedPhotos) {
+							$scope.message += ' Фотографий удалено: '+data.deletedPhotos;
+						}
+						albumNotify(4000);
+					}
+				});
+			}
+
+			// PHOTO SECTION
+
+			// Реализовать вывод не всех фотографий и подгрузку их
+			// Реализовать пакетное удаление
+			// улучшить интерфейс
+			// Разместить заглавный текст по середине
 		}
 	])
 

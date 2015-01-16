@@ -4,6 +4,11 @@ class Photo extends Eloquent
 {
 	public static $unguarded = true;
 
+	public static function get_all()
+	{
+		return Photo::all();
+	}
+
 	public static function get_more_photos($album_id, $offset = 0, $limit = 9)
 	{
 		return Photo::where('id_albom', '=', $album_id)

@@ -34,7 +34,7 @@ Route::get('/admin/deletePage', array(
 	'as'   => 'GetDataDeletePage',
 	'uses' => 'AdminController@getDataDeletePage'
 ));
-/*Route::post('/admin/deletePage', array(
-	'as'   => 'postDeleteAlbumPhoto',
-	'uses' => 'AdminController@deleteAlbumPhoto'
-));*/
+Route::post('/admin/deletePage', array(
+	'as'   => 'DeleteDataDeletePage',
+	'uses' => 'AdminController@deleteDataDeletePage'
+));

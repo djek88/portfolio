@@ -29,4 +29,9 @@ class Albom extends Eloquent
 	{
 		return Albom::where('id', '=', $id_album)->delete();
 	}
+
+	public static function getAlbumById($id_album)
+	{
+		return Albom::where('id', '=', $id_album)->get();
+	}
 }

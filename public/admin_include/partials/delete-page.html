@@ -1,12 +1,17 @@
-<!-- <div class="container altern">
+<div ng-show="cameAnswer">	
+	<div class="container altern">
 		<div class="row">
 			<h2>Удаление альбомов</h2>
-			@if(!count($all_albums))
-				<div class="bs-callout bs-callout-danger">
-					<h4>Нет ни одного альбома!</h4>
-					<p>Грусть, печаль...</p>
-				</div>
-			@else
+
+			<div class="row" ng-hide="isAlbumDelete">
+				<div class="alert alert-warning" role="alert">{{message}}</div>
+			</div>
+
+			<div class="row" ng-hide="isExistAlbum">
+				<div class="bs-callout bs-callout-danger">Ни одного альбома нет. Создайте альбом.</div>
+			</div>
+
+			<div class="row" ng-show="isExistAlbum">
 				<table class="table">
 					<thead>
 						<tr>
@@ -15,31 +20,53 @@
 							<th class="row-delete-button">Удаление</th>
 						</tr>
 					</thead>
-					<tbody id="upload-rows">
-						@foreach($all_albums as $albom)
-							<tr>
-								<td>{{ $albom['name'] }}</td>
-								<td>{{ $albom['count'] }}</td>
-								<td><a href="javascript:" id="delete-{{ $albom['id'] }}" onclick="delete_click({{ $albom['id'] }})"><span class="glyphicon glyphicon-floppy-remove"></span></a></td>
-							</tr>
-						@endforeach
+					<tbody>
+						<tr ng-repeat="album in all_albums">
+							<td>{{ album.name }}</td>
+							<td>{{ album.count }}</td>
+							<td><a href="" ng-click="deleteAlbum(album.id)"><span class="glyphicon glyphicon-floppy-remove"></span></a></td>
+						</tr>
 					</tbody>
 				</table>
-			@endif
+			</div>
 		</div>
 	</div>
-	<div class="container simple">
+	<div class="container simple" ng-show="isExistAlbum">
 		<div class="row">
 			<h2>Удаление фотографий</h2>
-			@if(!count($albums_with_photos))
-				<div class="bs-callout bs-callout-danger">
-					<h4>Нет ни одной фотографии!</h4>
-					<p>Грусть, печаль...</p>
-				</div>
-			@else
-				
-			@endif
-		</div>
-	</div> -->
 
-	{{albums_with_photos}}
+			<div class="row" ng-hide="isExistPhotos">
+				<div class="bs-callout bs-callout-danger">Ни одной фотографии нет.</div>
+			</div>
+
+			<div class="row" ng-show="isExistPhotos">
+				<table class="table">
+					<thead>
+						<tr>
+							<th class="col_name">Изображение</th>
+							<th class="col_description">Заголовок</th>
+							<th class="col_size">Описание</th>
+							<th class="col_progress">Альбом</th>
+							<th class="col_actions">Удаление</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="photo in all_photos">
+							<td><img ng-src="{{photo.reference_img}}" width="200px" /></td>
+							<td>{{photo.title}}</td>
+							<td>{{photo.description}}</td>
+							<td ng-repeat="album in all_albums | filter:{id:photo.id_albom}">{{album.name}}</td>
+							<td><a href="" ng-click=""><span class="glyphicon glyphicon-remove"></span></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div>Все альбомы</div>
+	<pre>{{ all_albums | json }}</pre><br>
+	<div>Альбомы с фотографиями</div>
+	<pre>{{ albums_with_photos | json }}</pre><br>
+	<div>Все фотографии</div>
+	<pre>{{ all_photos | json }}</pre><br>
+</div>
