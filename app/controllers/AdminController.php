@@ -97,6 +97,27 @@ class AdminController extends BaseController {
 		}
 	}
 
+	public function getAlbumDeletePage()
+	{
+		$pageData['albums'] = array();
+		$offset_album = Input::has('offset_album') ? (int)Input::get('offset_album') : 0;
+		$amount_album = Input::has('amount_album') ? (int)Input::get('amount_album') : 0;
+		$amount_photo_in_album = Input::has('amount_photo_in_album') ? (int)Input::get('amount_photo_in_album') : 0;
+
+		if($offset_album >= 0 && $amount_album > 0) {
+			$pageData['albums'] =  Albom::get_more_albums($offset_album, $amount_album);
+			for($i=0; $i<count($pageData['albums']); $i++) {
+				$pageData['albums'][$i]['amount_photos'] = count(Photo::where('id_albom', '=', $pageData['albums'][$i]['id'])->get());
+				$pageData['albums'][$i]['photos'] = array();
+				if($amount_photo_in_album > 0) {
+					$pageData['albums'][$i]['photos'] = Photo::get_more_photos($pageData['albums'][$i]['id'], 0, $amount_photo_in_album);
+				}
+				
+			}
+		}
+		return $pageData;
+	}
+
 	private function getDataAboutAlbums()
 	{
 		$albums_id_name = Albom::select_id_name_albom(); // array Album['id', 'name'] массив всех альбомов
@@ -128,26 +149,7 @@ class AdminController extends BaseController {
 		return "moreeeeeeeeeeeeee";
 	}
 
-	public function getDataDeletePage()
-	{
-		$pageData = array();
-		$dataAboutAlbums = $this->getDataAboutAlbums();
-
-		$pageData['all_albums']	= $dataAboutAlbums['all_albums'];
-		$pageData['albums_with_photos'] = $dataAboutAlbums['albums_with_photos'];
-		$pageData['all_photos'] = array();
-
-		for($i=0; $i<count($pageData['albums_with_photos']); $i++) {
-			$Photos = Photo::get_more_photos($pageData['albums_with_photos'][$i]['id'], 0, 3);
-			foreach ($Photos as $photo) {
-				$pageData['all_photos'][] = $photo;
-			}
-		}
-
-		return $pageData;
-	}
-
-
+	
 
 	public function deleteDataDeletePage()
 	{

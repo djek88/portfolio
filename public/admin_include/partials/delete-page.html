@@ -3,9 +3,9 @@
 		<div class="row">
 			<h2 class="mainTitle">Удаление альбомов</h2>
 
-			<div class="row" ng-hide="isAlbumDelete">
+			<!-- <div class="row" ng-hide="isAlbumDelete">
 				<div class="alert alert-warning" role="alert">{{message}}</div>
-			</div>
+			</div> -->
 
 			<div class="row" ng-hide="isExistAlbum">
 				<div class="bs-callout bs-callout-danger">Ни одного альбома нет. Создайте альбом.</div>
@@ -21,9 +21,9 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="album in all_albums">
+						<tr ng-repeat="album in page_data.albums">
 							<td>{{ album.name }}</td>
-							<td>{{ album.count }}</td>
+							<td>{{ album.amount_photos }}</td>
 							<td><a href="" ng-click="deleteAlbum(album.id)"><span class="glyphicon glyphicon-floppy-remove"></span></a></td>
 						</tr>
 					</tbody>
@@ -46,31 +46,28 @@
 							<th class="col_name">Изображение</th>
 							<th class="col_description">Заголовок</th>
 							<th class="col_size">Описание</th>
-							<th class="col_progress">Альбом</th>
+							<!-- <th class="col_progress">Альбом</th> -->
 							<th class="col_actions">Удаление</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="photo in all_photos">
-							<td><img ng-src="{{photo.reference_img}}" width="200px" /></td>
-							<td>{{photo.title}}</td>
-							<td>{{photo.description}}</td>
-							<td ng-repeat="album in all_albums | filter:{id:photo.id_albom}">{{album.name}}</td>
-							<td><a href="" ng-click=""><span class="glyphicon glyphicon-remove"></span></a></td>
-						</tr>
+						<div ng-repeat="album in page_data.albums">
+							<tr ng-repeat="photo in album.photos">
+								<td><img ng-src="{{photo.reference_img}}" width="200px" /></td>
+								<td>{{photo.title}}</td>
+								<td>{{photo.description}}</td>
+								<!-- <td ng-repeat="album in all_albums | filter:{id:photo.id_albom}">{{album.name}}</td> -->
+								<td><a href="" ng-click=""><span class="glyphicon glyphicon-remove"></span></a></td>
+							</tr>
+						</div>
 					</tbody>
 				</table>
-				<!-- <a href="" ng-click=""><span class="glyphicon glyphicon-remove"></span></a> -->
-				<div align="right">
+				<!-- <div align="right">
 					<a href="" ng-click="morePhotos()" type="button" class="btn btn-danger">More</a>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
-	<div>Все альбомы</div>
-	<pre>{{ all_albums | json }}</pre><br>
-	<div>Альбомы с фотографиями</div>
-	<pre>{{ albums_with_photos | json }}</pre><br>
-	<div>Все фотографии</div>
-	<pre>{{ all_photos | json }}</pre><br>
+	<div>Данные страницы</div>
+	<pre>{{ page_data | json }}</pre><br>
 </div>

@@ -124,28 +124,35 @@ angular
 .controller('DeletePageCtrl', ['$scope', '$http', '$timeout',
 	function($scope, $http, $timeout) {
 			//INITIAL DATA SECTION
+			$scope.page_data = {};
 			$scope.cameAnswer = false;
 
-			$http.get('/admin/deletePage').success(function(data) {
-				$scope.all_albums = data.all_albums;
-				$scope.albums_with_photos = data.albums_with_photos;
-				$scope.all_photos = data.all_photos;
+			$http.post('/admin/deletePage/getAlbum', {
+				'offset_album' : 0,
+				'amount_album': 3,
+				'amount_photo_in_album' : 3
+			}).success(function(data) {
+				$scope.page_data = data;
 				$scope.cameAnswer = true;
 			});
 
-			$scope.$watch("all_albums", function(newValue, oldValue) {
-				if (typeof newValue === "object") {
-					$scope.isExistAlbum = (newValue.length != 0);
-				}
-			});
+			$scope.$watch("page_data", function(newValue, oldValue) {
+				if ($scope.cameAnswer) {
+					$scope.isExistAlbum = (newValue.albums.length != 0);
 
-			$scope.$watch("all_photos", function(newValue, oldValue) {
-				if (typeof newValue === "object") {
-					$scope.isExistPhotos = (newValue.length != 0);
+					if($scope.isExistAlbum) {
+						for(var i = 0; i < newValue.albums.length; i++) {
+							if(newValue.albums[i].photos.length) {
+								$scope.isExistPhotos = true;
+								break;
+							}
+						}
+					}
 				}
 			});
+			
 			//ALBUM SECTION
-			$scope.message = "";
+			/*$scope.message = "";
 			$scope.isAlbumDelete = true;
 
 			var albumNotify = function(time) {
@@ -177,17 +184,17 @@ angular
 						albumNotify(4000);
 					}
 				});
-			}
+			}*/
 
 			// PHOTO SECTION
 
-			$scope.morePhotos = function() {
+			/*$scope.morePhotos = function() {
 				$http.post('/admin/deletePage/more', {
 					
 				}).success(function(data) {
 					
 				});
-			}
+			}*/
 
 			// Реализовать вывод не всех фотографий и подгрузку их
 			// Реализовать пакетное удаление

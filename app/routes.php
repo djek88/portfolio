@@ -29,16 +29,16 @@ Route::post('/admin/addPage', array(
 	'uses' => 'AdminController@saveDataAddPage'
 ));
 
-Route::get('/admin/deletePage', array(
+Route::post('/admin/deletePage/getAlbum', array(
 	'before' => 'isAuth',
-	'as'   => 'GetDataDeletePage',
-	'uses' => 'AdminController@getDataDeletePage'
+	'as'   => 'GetAlbumDeletePage',
+	'uses' => 'AdminController@getAlbumDeletePage'
 ));
-Route::post('/admin/deletePage', array(
+/*Route::post('/admin/deletePage', array(
 	'as'   => 'DeleteDataDeletePage',
 	'uses' => 'AdminController@deleteDataDeletePage'
 ));
 Route::post('/admin/deletePage/more', array(
 	'as'   => 'MorePhotosDeletePage',
 	'uses' => 'AdminController@morePhotosDeletePage'
-));
+));*/

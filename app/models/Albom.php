@@ -14,6 +14,14 @@ class Albom extends Eloquent
 		return Albom::select('id', 'name')->get();
 	}
 
+	public static function get_more_albums($offset_album, $amount_album)
+	{
+		return Albom::select('id', 'name')
+			->skip($offset_album)
+			->take($amount_album)
+			->get();
+	}
+
 	public static function add($name_album)
 	{
 		try {

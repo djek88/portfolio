@@ -11,7 +11,8 @@ class Photo extends Eloquent
 
 	public static function get_more_photos($album_id, $offset = 0, $limit = 9)
 	{
-		return Photo::where('id_albom', '=', $album_id)
+		return Photo::select('id_photo', 'id_albom', 'title', 'description', 'reference_img')
+			->where('id_albom', '=', $album_id)
 			->skip($offset)
 			->take($limit)
 			->get();
