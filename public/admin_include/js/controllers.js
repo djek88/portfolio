@@ -4,10 +4,10 @@
 
 angular
 
-	.module('mainModule')
+.module('mainModule')
 
-	.controller('AddPageCtrl', ['$scope', '$http', '$timeout', 'FileUploader',
-		function($scope, $http, $timeout, FileUploader) {
+.controller('AddPageCtrl', ['$scope', '$http', '$timeout', 'FileUploader',
+	function($scope, $http, $timeout, FileUploader) {
 			//INITIAL DATA SECTION
 			$scope.cameAnswer = false;
 
@@ -57,29 +57,29 @@ angular
 			});
 
 				// filters
-			uploader.filters.push({
-				name: 'imageFilter',
-				fn: function(item /*{File|FileLikeObject}*/ , options) {
-					var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-					/*Check the type file and file size*/
-					return ('|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1 && item.size/1024/1024 < 10);
-				}
-			});
+				uploader.filters.push({
+					name: 'imageFilter',
+					fn: function(item /*{File|FileLikeObject}*/ , options) {
+						var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+						/*Check the type file and file size*/
+						return ('|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1 && item.size/1024/1024 < 10);
+					}
+				});
 
 				// callbacks
-			uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/ , filter, options) {
-				console.info('onWhenAddingFileFailed', item, filter, options);
-			};
-			uploader.onAfterAddingFile = function(fileItem) {
-				fileItem.formData = [{title: '', description: '', album: ''}];
-				fileItem.isValidFields = true;
+				uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/ , filter, options) {
+					console.info('onWhenAddingFileFailed', item, filter, options);
+				};
+				uploader.onAfterAddingFile = function(fileItem) {
+					fileItem.formData = [{title: '', description: '', album: ''}];
+					fileItem.isValidFields = true;
 
 				// Override "upload" method
 				var upload = fileItem.upload;
 				fileItem.upload = function() {
 					fileItem.isValidFields = (/^([a-zA-Z1-9]{5,30})$/.test(fileItem.formData[0].title) &&
-											  /^([a-zA-Z1-9 ]{10,100})$/.test(fileItem.formData[0].description) &&
-											  fileItem.formData[0].album != "");
+						/^([a-zA-Z1-9 ]{10,100})$/.test(fileItem.formData[0].description) &&
+						fileItem.formData[0].album != "");
 					if(fileItem.isValidFields) {
 						upload.call(fileItem);
 					} else {
@@ -119,10 +119,10 @@ angular
 			};
 			console.info('uploader', uploader);
 		}
-	])
+		])
 
-	.controller('DeletePageCtrl', ['$scope', '$http', '$timeout',
-		function($scope, $http, $timeout) {
+.controller('DeletePageCtrl', ['$scope', '$http', '$timeout',
+	function($scope, $http, $timeout) {
 			//INITIAL DATA SECTION
 			$scope.cameAnswer = false;
 
@@ -165,6 +165,13 @@ angular
 						$scope.albums_with_photos = data.albums_with_photos;
 
 						if(data.deletedPhotos) {
+							// splice с foreachом работает не корректно нужно использовать
+							// for в обратном порядке
+							for (var i = $scope.all_photos.length - 1; i >= 0; i--) {
+								if ($scope.all_photos[i].id_albom == id_album) {
+									$scope.all_photos.splice(i, 1);
+								}
+							}
 							$scope.message += ' Фотографий удалено: '+data.deletedPhotos;
 						}
 						albumNotify(4000);
@@ -174,15 +181,22 @@ angular
 
 			// PHOTO SECTION
 
+			$scope.morePhotos = function() {
+				$http.post('/admin/deletePage/more', {
+					
+				}).success(function(data) {
+					
+				});
+			}
+
 			// Реализовать вывод не всех фотографий и подгрузку их
 			// Реализовать пакетное удаление
 			// улучшить интерфейс
-			// Разместить заглавный текст по середине
 		}
-	])
+		])
 
-	.controller('EditPageCtrl', ['$scope',
-		function($scope) {
-			$scope.edit = "editpage";
-		}
+.controller('EditPageCtrl', ['$scope',
+	function($scope) {
+		$scope.edit = "editpage";
+	}
 	]);

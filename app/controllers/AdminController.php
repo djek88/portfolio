@@ -123,6 +123,11 @@ class AdminController extends BaseController {
 				'albums_with_photos' => $albums_with_photos];
 	}
 	
+	public function morePhotosDeletePage()
+	{
+		return "moreeeeeeeeeeeeee";
+	}
+
 	public function getDataDeletePage()
 	{
 		$pageData = array();
@@ -130,10 +135,19 @@ class AdminController extends BaseController {
 
 		$pageData['all_albums']	= $dataAboutAlbums['all_albums'];
 		$pageData['albums_with_photos'] = $dataAboutAlbums['albums_with_photos'];
-		$pageData['all_photos'] = Photo::get_all();
+		$pageData['all_photos'] = array();
+
+		for($i=0; $i<count($pageData['albums_with_photos']); $i++) {
+			$Photos = Photo::get_more_photos($pageData['albums_with_photos'][$i]['id'], 0, 3);
+			foreach ($Photos as $photo) {
+				$pageData['all_photos'][] = $photo;
+			}
+		}
 
 		return $pageData;
 	}
+
+
 
 	public function deleteDataDeletePage()
 	{

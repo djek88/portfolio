@@ -12,6 +12,9 @@ body {
 .altern  {
 	background-color: #26292E;
 }
+.mainTitle {
+	text-align: center;
+}
 
 /*ADD ADMIN PAGE*/
 .form-control.input_nameAlbum {

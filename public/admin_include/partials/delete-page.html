@@ -1,7 +1,7 @@
 <div ng-show="cameAnswer">	
 	<div class="container altern">
 		<div class="row">
-			<h2>Удаление альбомов</h2>
+			<h2 class="mainTitle">Удаление альбомов</h2>
 
 			<div class="row" ng-hide="isAlbumDelete">
 				<div class="alert alert-warning" role="alert">{{message}}</div>
@@ -33,7 +33,7 @@
 	</div>
 	<div class="container simple" ng-show="isExistAlbum">
 		<div class="row">
-			<h2>Удаление фотографий</h2>
+			<h2 class="mainTitle">Удаление фотографий</h2>
 
 			<div class="row" ng-hide="isExistPhotos">
 				<div class="bs-callout bs-callout-danger">Ни одной фотографии нет.</div>
@@ -60,6 +60,10 @@
 						</tr>
 					</tbody>
 				</table>
+				<!-- <a href="" ng-click=""><span class="glyphicon glyphicon-remove"></span></a> -->
+				<div align="right">
+					<a href="" ng-click="morePhotos()" type="button" class="btn btn-danger">More</a>
+				</div>
 			</div>
 		</div>
 	</div>
