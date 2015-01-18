@@ -99,20 +99,25 @@ class AdminController extends BaseController {
 
 	public function getAlbumDeletePage()
 	{
-		$pageData['albums'] = array();
 		$offset_album = Input::has('offset_album') ? (int)Input::get('offset_album') : 0;
 		$amount_album = Input::has('amount_album') ? (int)Input::get('amount_album') : 0;
 		$amount_photo_in_album = Input::has('amount_photo_in_album') ? (int)Input::get('amount_photo_in_album') : 0;
-
+		
+		$pageData['amount_albums'] = Albom::count();
+		$pageData['albums'] = array();
 		if($offset_album >= 0 && $amount_album > 0) {
+			if($amount_album > 20)
+				$amount_album = 20;
 			$pageData['albums'] =  Albom::get_more_albums($offset_album, $amount_album);
 			for($i=0; $i<count($pageData['albums']); $i++) {
-				$pageData['albums'][$i]['amount_photos'] = count(Photo::where('id_albom', '=', $pageData['albums'][$i]['id'])->get());
+				$pageData['albums'][$i]['amount_photos'] = Photo::get_count_photos_in_album($pageData['albums'][$i]['id']);
 				$pageData['albums'][$i]['photos'] = array();
 				if($amount_photo_in_album > 0) {
 					$pageData['albums'][$i]['photos'] = Photo::get_more_photos($pageData['albums'][$i]['id'], 0, $amount_photo_in_album);
+					for ($j=0; $j < count($pageData['albums'][$i]['photos']); $j++) { 
+						$pageData['albums'][$i]['photos'][$j]['name_album'] = $pageData['albums'][$i]['name'];
+					}
 				}
-				
 			}
 		}
 		return $pageData;

@@ -9,10 +9,15 @@ class Photo extends Eloquent
 		return Photo::all();
 	}
 
-	public static function get_more_photos($album_id, $offset = 0, $limit = 9)
+	public static function get_count_photos_in_album($id_album)
+	{
+		return Photo::where('id_albom', '=', $id_album)->count();
+	}
+
+	public static function get_more_photos($id_album, $offset = 0, $limit = 9)
 	{
 		return Photo::select('id_photo', 'id_albom', 'title', 'description', 'reference_img')
-			->where('id_albom', '=', $album_id)
+			->where('id_albom', '=', $id_album)
 			->skip($offset)
 			->take($limit)
 			->get();
