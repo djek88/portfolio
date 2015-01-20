@@ -34,11 +34,11 @@ Route::post('/admin/deletePage/getAlbum', array(
 	'as'   => 'GetAlbumDeletePage',
 	'uses' => 'AdminController@getAlbumDeletePage'
 ));
-/*Route::post('/admin/deletePage', array(
-	'as'   => 'DeleteDataDeletePage',
-	'uses' => 'AdminController@deleteDataDeletePage'
+Route::post('/admin/deletePage/getPhoto', array(
+	'as'   => 'GetPhotoDeletePage',
+	'uses' => 'AdminController@getPhotoDeletePage'
 ));
-Route::post('/admin/deletePage/more', array(
+/*Route::post('/admin/deletePage/more', array(
 	'as'   => 'MorePhotosDeletePage',
 	'uses' => 'AdminController@morePhotosDeletePage'
 ));*/

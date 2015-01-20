@@ -8,11 +8,11 @@
 				<div class="alert alert-warning" role="alert">{{message}}</div>
 			</div> -->
 
-			<div class="row" ng-hide="isExistAlbum">
+			<div class="row" ng-hide="isExistAlbums">
 				<div class="bs-callout bs-callout-danger">Ни одного альбома нет. Создайте альбом.</div>
 			</div>
 
-			<div class="row" ng-show="isExistAlbum">
+			<div class="row" ng-show="isExistAlbums">
 				<table class="table">
 					<thead>
 						<tr>
@@ -36,7 +36,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="container simple" ng-show="isExistAlbum">
+	<div class="container simple" ng-show="isExistAlbums">
 		<div class="row">
 			<h2 class="mainTitle">Удаление фотографий</h2>
 
@@ -66,7 +66,7 @@
 					</tbody>
 				</table>
 				<div align="right" ng-hide="isAllPhotosShow">
-					<a href="" ng-click="" type="button" class="btn btn-danger">More</a>
+					<a href="" ng-click="more_photos()" type="button" class="btn btn-danger">More</a>
 				</div>
 			</div>
 		</div>

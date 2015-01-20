@@ -18,6 +18,21 @@ class AdminController extends BaseController {
 		return View::make('/adminPage');
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	public function getDataAddPage()
 	{
 		$all_albums = Albom::select_id_name_albom();
@@ -97,6 +112,25 @@ class AdminController extends BaseController {
 		}
 	}
 
+
+
+
+
+
+
+
+
+
+
+	public function getPhotosFromAlbum($id_album, $name_album, $offset, $limit)
+	{
+		$data = Photo::get_more_photos($id_album, $offset, $limit);
+		for ($i=0; $i < count($data); $i++) { 
+			$data[$i]['name_album'] = $name_album;
+		}
+		return $data;
+	}
+
 	public function getAlbumDeletePage()
 	{
 		$offset_album = Input::has('offset_album') ? (int)Input::get('offset_album') : 0;
@@ -108,22 +142,53 @@ class AdminController extends BaseController {
 		if($offset_album >= 0 && $amount_album > 0) {
 			if($amount_album > 20)
 				$amount_album = 20;
+
 			$pageData['albums'] =  Albom::get_more_albums($offset_album, $amount_album);
 			for($i=0; $i<count($pageData['albums']); $i++) {
 				$pageData['albums'][$i]['amount_photos'] = Photo::get_count_photos_in_album($pageData['albums'][$i]['id']);
 				$pageData['albums'][$i]['photos'] = array();
 				if($amount_photo_in_album > 0) {
-					$pageData['albums'][$i]['photos'] = Photo::get_more_photos($pageData['albums'][$i]['id'], 0, $amount_photo_in_album);
-					for ($j=0; $j < count($pageData['albums'][$i]['photos']); $j++) { 
-						$pageData['albums'][$i]['photos'][$j]['name_album'] = $pageData['albums'][$i]['name'];
-					}
+					$pageData['albums'][$i]['photos'] = $this->getPhotosFromAlbum(
+						$pageData['albums'][$i]['id'],
+						$pageData['albums'][$i]['name'],
+						0,
+						$amount_photo_in_album
+					);
 				}
 			}
 		}
 		return $pageData;
 	}
 
-	private function getDataAboutAlbums()
+	/*public function getPhotoDeletePage()
+	{
+		if(Input::has('request_data')) {
+			$data = Input::get('request_data');
+			$limit_photos = isset($data['limit_photos']) ? (int)$data['limit_photos'] : 0;
+			$albums = array();
+			if(isset($data['albums']) && gettype($data['albums']) == 'array')
+				$albums = $data['albums'];
+
+			if($limit_photos > 0 && count($albums) > 0) {
+				$request = array();
+				for ($i=0; $i < count($albums); $i++) {
+					$offset = isset($albums[$i]['offset']) ? (int)$albums[$i]['offset'] : 0;
+					$id_album = isset($albums[$i]['id']) ? (int)$albums[$i]['id'] : 0;
+
+					$photos = $this->getPhotosFromAlbum();
+
+					$request[] = array(
+						'id_albom' => 8,
+						'' => ,
+					);
+				}
+				return $request;
+			}
+		}
+		return "false";
+	}*/
+
+	/*private function getDataAboutAlbums()
 	{
 		$albums_id_name = Albom::select_id_name_albom(); // array Album['id', 'name'] массив всех альбомов
 		$albums_id_count = Photo::select(DB::raw(' id_albom as id, count(id_photo) as count'))
@@ -147,16 +212,9 @@ class AdminController extends BaseController {
 
 		return ['all_albums' => $albums_id_count_name,
 				'albums_with_photos' => $albums_with_photos];
-	}
-	
-	public function morePhotosDeletePage()
-	{
-		return "moreeeeeeeeeeeeee";
-	}
+	}*/
 
-	
-
-	public function deleteDataDeletePage()
+	/*public function deleteDataDeletePage()
 	{
 		if(Input::has('id_album')) {
 			$id_album = Input::get('id_album');
@@ -184,5 +242,5 @@ class AdminController extends BaseController {
 	public function edit()
 	{
 		return "В разработке...";
-	}
+	}*/
 }
