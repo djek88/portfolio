@@ -2,13 +2,78 @@
 <div ng-show="cameAnswer">	
 	<div class="container altern">
 		<div class="row">
-			<h2 class="mainTitle">Удаление альбомов</h2>
+			<h2  class="mainTitle">Удаление альбомов и фотографий</h2>
+
+			<div class="row" ng-hide="page_data.amount_albums">
+				<div class="bs-callout bs-callout-danger">Ни одного альбома нет. Создайте альбом.</div>
+			</div>
+
+			<div class="row" ng-show="page_data.amount_albums">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Альбомы: <small ng-hide="isAllAlbumsShow"><a href="" ng-click=""><span class="glyphicon glyphicon-cloud-download"></span></a></small></h4>
+						<select class="form-control" ng-model="selectAlbum" ng-options="album.id as album.name for album in page_data.albums">
+							<option value="" disabled>Выберете альбом...</option>
+						</select>
+					</div>
+
+					<div class="col-md-4" align="center">
+						<h4>Всего фотографий в альбоме:</h4>
+						<strong ng-repeat="album in page_data.albums | filter:{id:selectAlbum}">
+							{{ album.amount_photos }}
+						</strong>
+					</div>
+
+					<div class="col-md-3" align="center">
+						<h4>Удалить альбом:</h4>
+						<a href="" ng-click="" ng-show="selectAlbum"><span class="glyphicon glyphicon-floppy-remove"></span></a>
+					</div>
+				</div>
+
+				<div class="row" ng-show="selectAlbum" ng-repeat="album in page_data.albums | filter:{id:selectAlbum}" style="border-top: 2px solid">
+					<div ng-hide="album.amount_photos">
+						<div class="bs-callout bs-callout-danger">Ни одной фотографии в этом альбоме нет.</div>
+					</div>
+
+					<div ng-show="album.amount_photos">
+						<div ng-hide="album.photos.length">
+							<strong>
+								Для отображения фотографий в альбоме нажмите на кнопку ниже.
+							</strong>
+						</div>
+
+						<div ng-show="album.photos.length">
+							<span ng-repeat="photo in album.photos">
+								asdasdasdasd
+							</span>
+						</div>
+
+						<div class="row">
+							<a href="" ng-click=""><span class="glyphicon glyphicon-save"></span></a>
+						</div>						
+					</div>
+				</div>
+			</div>			
+		</div>
+	</div>
+</div>
+<div>Данные страницы</div>
+<pre>{{ page_data | json }}</pre><br>
+
+
+
+
+
+<!-- <div ng-show="cameAnswer">	
+	<div class="container altern">
+		<div class="row">
+			<h2 class="mainTitle">Удаление альбомов</h2> -->
 
 			<!-- <div class="row" ng-hide="isAlbumDelete">
 				<div class="alert alert-warning" role="alert">{{message}}</div>
 			</div> -->
 
-			<div class="row" ng-hide="isExistAlbums">
+			<!-- <div class="row" ng-hide="isExistAlbums">
 				<div class="bs-callout bs-callout-danger">Ни одного альбома нет. Создайте альбом.</div>
 			</div>
 
@@ -72,5 +137,4 @@
 		</div>
 	</div>
 </div>
-<div>Данные страницы</div>
-<pre>{{ page_data | json }}</pre><br>
+-->

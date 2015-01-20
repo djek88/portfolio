@@ -139,6 +139,7 @@ class AdminController extends BaseController {
 		
 		$pageData['amount_albums'] = Albom::count();
 		$pageData['albums'] = array();
+		
 		if($offset_album >= 0 && $amount_album > 0) {
 			if($amount_album > 20)
 				$amount_album = 20;

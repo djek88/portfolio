@@ -128,15 +128,21 @@ angular
 			$scope.cameAnswer = false;
 			$scope.isAllAlbumsShow = true;
 			$scope.isAllPhotosShow = true;
+			$scope.selectAlbum = null;
 
 			$http.post('/admin/deletePage/getAlbum', {
 				'offset_album' : 0,
-				'amount_album': 1,
-				'amount_photo_in_album' : 2
+				'amount_album': 10,
+				'amount_photo_in_album' : 0
 			}).success(function(data) {
 				$scope.cameAnswer = true;
 				$scope.page_data = data;				
 			});
+
+			var check_isExistAlbums_isAllAlbumsShow = function(page_data) {
+				$scope.isExistAlbums = (page_data.albums.length != 0);
+				$scope.isAllAlbumsShow = (page_data.amount_albums - page_data.albums.length == 0);
+			}
 
 			var check_isExistPhotos_isAllPhotosShow = function(albums) {
 				for(var i = 0; i < albums.length; i++) {
@@ -152,10 +158,6 @@ angular
 				}
 			}
 
-			var check_isExistAlbums_isAllAlbumsShow = function(page_data) {
-				$scope.isExistAlbums = (page_data.albums.length != 0);
-				$scope.isAllAlbumsShow = (page_data.amount_albums - page_data.albums.length == 0);
-			}
 
 			$scope.$watch("page_data", function(newValue, oldValue) {
 				console.log("Зашло в наблюдатель!");
@@ -170,9 +172,10 @@ angular
 				}
 			}, true);
 
+
 			//ALBUM SECTION
 
-			$scope.more_albums = function() {
+			/*$scope.more_albums = function() {
 				$scope.isAllAlbumsShow = true;
 				$scope.isAllPhotosShow = true;
 
@@ -189,7 +192,7 @@ angular
 						check_isExistPhotos_isAllPhotosShow($scope.page_data.albums);						
 					}
 				});
-			}
+			}*/
 
 			/*$scope.message = "";
 			$scope.isAlbumDelete = true;
@@ -227,7 +230,7 @@ angular
 
 			// PHOTO SECTION
 
-			$scope.getArrayAllPhotos = function () {
+			/*$scope.getArrayAllPhotos = function () {
 				var allPhotos = [];
 				angular.forEach($scope.page_data.albums, function(album, key){
 					angular.forEach(album.photos, function(photo, key){
@@ -235,7 +238,7 @@ angular
 					});
 				});
 				return allPhotos;
-			}
+			}*/
 
 			/*$scope.more_photos = function() {
 				$scope.isAllAlbumsShow = true;
