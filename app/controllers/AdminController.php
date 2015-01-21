@@ -137,7 +137,7 @@ class AdminController extends BaseController {
 		$amount_album = Input::has('amount_album') ? (int)Input::get('amount_album') : 0;
 		$amount_photo_in_album = Input::has('amount_photo_in_album') ? (int)Input::get('amount_photo_in_album') : 0;
 		
-		$pageData['amount_albums'] = Albom::count();
+		$pageData['amount_albums'] = Albom::count();		
 		$pageData['albums'] = array();
 		
 		if($offset_album >= 0 && $amount_album > 0) {
