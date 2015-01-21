@@ -132,7 +132,7 @@ angular
 
 			$http.post('/admin/deletePage/getAlbum', {
 				'offset_album' : 0,
-				'amount_album': 10,
+				'amount_album': 3,
 				'amount_photo_in_album' : 0
 			}).success(function(data) {
 				$scope.cameAnswer = true;
