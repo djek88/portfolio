@@ -4,6 +4,10 @@
 		<div class="row">
 			<h2 class="mainTitle">Удаление альбомов и фотографий</h2>
 
+			<div class="row" ng-hide="isAlbumDelete">
+				<div class="alert alert-warning" role="alert">{{message}}</div>
+			</div>
+
 			<div class="row" ng-hide="page_data.amount_albums">
 				<div class="bs-callout bs-callout-danger">Ни одного альбома нет. Создайте альбом.</div>
 			</div>
@@ -12,7 +16,7 @@
 				<div class="row">
 					<div class="col-md-3">
 						<h4>Альбомы: <small ng-hide="isAllAlbumsShow" style="float: right"><a href="" ng-click="more_albums()"><span class="glyphicon glyphicon-cloud-download" style="color: rgb(186, 65, 69); font-size: 20px;"></span></a></small></h4>
-						<select class="form-control" ng-model="selectAlbumId" ng-options="album.id as album.name for album in page_data.albums">
+						<select class="form-control" ng-model="selectAlbumId" ng-disabled="hasActiveRequest" ng-options="album.id as album.name for album in page_data.albums">
 							<option value="" disabled>Выберете альбом...</option>
 						</select>
 					</div>
@@ -26,7 +30,7 @@
 
 					<div class="col-md-4" align="center">
 						<h4>Удалить альбом:</h4>
-						<a href="" ng-click="" ng-show="(selectAlbumId != null)"><span style="color: rgb(186, 65, 69); font-size: 20px;" class="glyphicon glyphicon-floppy-remove"></span></a>
+						<a href="" ng-click="deleteAlbum(selectAlbumId)" ng-disabled="hasActiveRequest" ng-show="(selectAlbumId != null)"><span style="color: rgb(186, 65, 69); font-size: 20px;" class="glyphicon glyphicon-floppy-remove"></span></a>
 					</div>
 				</div>
 
