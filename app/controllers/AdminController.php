@@ -203,30 +203,47 @@ class AdminController extends BaseController {
 
 	public function deleteAlbumDeletePage()
 	{
-		if(Input::has('id_album')) {
-			$id_album = (int)Input::get('id_album');
+		$id_album = Input::has('id_album') ? (int)Input::get('id_album') : -1;
 
-			if($id_album >= 0) {				
-				$affectedRowsAlbums = Albom::deleteAlbum($id_album);
-				$affectedRowsPhotos = 0;
+		if($id_album >= 0) {
+			$affectedRowsAlbums = Albom::deleteAlbum($id_album);
+			$affectedRowsPhotos = 0;
 
-				if($affectedRowsAlbums) {
-					$photos_ref = Photo::select('reference_img')->where('id_albom', '=', $id_album)->get();
-					$affectedRowsPhotos = Photo::deleteFromAlbum($id_album);
-					
-					if($affectedRowsPhotos) {
-						for ($i=0; $i<count($photos_ref); $i++) { 
-							if(File::exists($photos_ref[$i]['reference_img'])) {
-								File::delete($photos_ref[$i]['reference_img']);
-							}
+			if($affectedRowsAlbums) {
+				$photos_ref = Photo::select('reference_img')->where('id_albom', '=', $id_album)->get();
+				$affectedRowsPhotos = Photo::deleteFromAlbum($id_album);
+				
+				if($affectedRowsPhotos) {
+					for ($i=0; $i<count($photos_ref); $i++) { 
+						if(File::exists($photos_ref[$i]['reference_img'])) {
+							File::delete($photos_ref[$i]['reference_img']);
 						}
 					}
-
 				}
-				return [
-					'isDeleteAlbum' => $affectedRowsAlbums,
-					'deletedPhotos' => $affectedRowsPhotos,
-				];
+
+			}
+			return [
+				'DeletedAlbum'  => $affectedRowsAlbums,
+				'deletedPhotos' => $affectedRowsPhotos,
+			];
+		}
+	}
+
+	public function deletePhotoDeletePage()
+	{
+		$id_photo = Input::has('id_photo') ? (int)Input::get('id_photo') : -1;
+
+		if($id_photo >= 0) {
+			$photos_ref = Photo::select('reference_img')->where('id_photo', '=', $id_photo)->get();
+			$affectedRowsPhotos = Photo::deletePhoto($id_photo);
+
+			if($affectedRowsPhotos) {
+				for ($i=0; $i<count($photos_ref); $i++) { 
+					if(File::exists($photos_ref[$i]['reference_img'])) {
+						File::delete($photos_ref[$i]['reference_img']);
+					}
+				}
+				return 1;
 			}
 		}
 	}

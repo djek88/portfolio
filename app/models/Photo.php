@@ -41,4 +41,9 @@ class Photo extends Eloquent
 	{
 		return Photo::where('id_albom', '=', $id_album)->delete();
 	}
+
+	public static function deletePhoto($id_photo)
+	{
+		return Photo::where('id_photo', '=', $id_photo)->delete();
+	}
 }

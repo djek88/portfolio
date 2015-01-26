@@ -10,19 +10,19 @@ Route::post('/more-photo', array(
 ));
 
 Route::any('/admin/login', array(
-	'before' => 'isLogged',
-	'as'   => 'loginPageAdmin',
-	'uses' => 'AdminController@login'
+	'before'	=> 'isLogged',
+	'as'		=> 'loginPageAdmin',
+	'uses'		=> 'AdminController@login'
 ));
 Route::get('/admin', array(
-	'before' => 'isAuth',
-	'as'   => 'AdminPage',
-	'uses' => 'AdminController@adminPage'
+	'before'	=> 'isAuth',
+	'as'		=> 'AdminPage',
+	'uses'		=> 'AdminController@adminPage'
 ));
 Route::get('/admin/addPage', array(
-	'before' => 'isAuth',
-	'as'   => 'GetDataAddPage',
-	'uses' => 'AdminController@getDataAddPage'
+	'before'	=> 'isAuth',
+	'as'		=> 'GetDataAddPage',
+	'uses'		=> 'AdminController@getDataAddPage'
 ));
 Route::post('/admin/addPage', array(
 	'as'   => 'SaveDataFromAddPage',
@@ -30,9 +30,9 @@ Route::post('/admin/addPage', array(
 ));
 
 Route::post('/admin/deletePage/getAlbum', array(
-	'before' => 'isAuth',
-	'as'   => 'GetAlbumDeletePage',
-	'uses' => 'AdminController@getAlbumDeletePage'
+	'before'	=> 'isAuth',
+	'as'		=> 'GetAlbumDeletePage',
+	'uses'		=> 'AdminController@getAlbumDeletePage'
 ));
 Route::post('/admin/deletePage/getPhoto', array(
 	'as'   => 'GetPhotoDeletePage',
@@ -42,6 +42,11 @@ Route::post('/admin/deletePage/deleteAlbum', array(
 	'as'   => 'DeleteAlbumDeletePage',
 	'uses' => 'AdminController@deleteAlbumDeletePage'
 ));
+Route::post('/admin/deletePage/deletePhoto', array(
+	'as'   => 'DeletePhotoDeletePage',
+	'uses' => 'AdminController@deletePhotoDeletePage'
+));
+
 /*Route::post('/admin/deletePage/more', array(
 	'as'   => 'MorePhotosDeletePage',
 	'uses' => 'AdminController@morePhotosDeletePage'
