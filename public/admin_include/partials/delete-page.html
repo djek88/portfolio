@@ -1,4 +1,9 @@
 <div>Загружено альбомов: {{page_data.albums.length}}, Всего альбомов в бд: {{page_data.amount_albums}}</div>
+
+<!-- <button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+  Popover on right
+</button> -->
+
 <div ng-show="cameAnswer">	
 	<div class="container altern">
 		<div class="row">
@@ -15,7 +20,7 @@
 			<div class="row" ng-show="page_data.amount_albums">
 				<div class="row">
 					<div class="col-md-3">
-						<h4>Альбомы: <small ng-hide="isAllAlbumsShow" style="float: right"><a href="" ng-click="more_albums()"><span class="glyphicon glyphicon-cloud-download" style="color: rgb(186, 65, 69); font-size: 20px;"></span></a></small></h4>
+						<h4>Альбомы: <small ng-hide="isAllAlbumsShow" style="float: right"><a href="" ng-click="more_albums()"><span class="glyphicon glyphicon-cloud-download miniButton"></span></a></small></h4>
 						<select class="form-control" ng-model="selectAlbumId" ng-disabled="hasActiveRequest" ng-options="album.id as album.name for album in page_data.albums">
 							<option value="" disabled>Выберете альбом...</option>
 						</select>
@@ -30,7 +35,9 @@
 
 					<div class="col-md-4" align="center">
 						<h4>Удалить альбом:</h4>
-						<a href="" ng-click="deleteAlbum(selectAlbumId)" ng-disabled="hasActiveRequest" ng-show="(selectAlbumId != null)"><span style="color: rgb(186, 65, 69); font-size: 20px;" class="glyphicon glyphicon-floppy-remove"></span></a>
+
+						<a href="" ng-disabled="hasActiveRequest" id="editButton" ng-show="(selectAlbumId != null)" data-container="body" data-toggle="popover" data-placement="left" data-content=""><span class="glyphicon glyphicon-pencil miniButton"></span></a>
+						<a href="" ng-click="deleteAlbum(selectAlbumId)" ng-disabled="hasActiveRequest" ng-show="(selectAlbumId != null)"><span class="glyphicon glyphicon-floppy-remove miniButton"></span></a>
 					</div>
 				</div>
 
@@ -42,18 +49,14 @@
 					<div ng-show="album.amount_photos">						
 						<div class="col-sm-6 col-md-4" style="margin-bottom: 30px" ng-repeat="photo in album.photos">
 							<div class="thumbnail">
-								<a href="" ng-click="delete_photo(photo.id_albom, photo.id_photo)" ng-disabled="hasActiveRequest" style="position: absolute; right: 2px; top: -15px; font-size: 20px; color: rgb(186, 65, 69); "><span class="glyphicon glyphicon-remove"></span></a>
+								<a href="" class="miniButtonRemovePhoto" ng-click="delete_photo(photo.id_albom, photo.id_photo)" ng-disabled="hasActiveRequest"><span class="glyphicon glyphicon-remove"></span></a>
 								<img style="height: 350px;" ng-src="{{photo.reference_img}}">
 								<div class="caption">
 									<h3>{{photo.title}}</h3>
 									<p>{{photo.description}}</p>										
 								</div>
 							</div>
-						</div>						
-
-						<div ng-hide="isAllPhotosShowInSelectAlbum" style="float:right;">
-							<a href="" ng-click="more_photos(album.id)"><span class="glyphicon glyphicon-save"></span></a>
-						</div>						
+						</div>					
 					</div>
 				</div>
 			</div>			

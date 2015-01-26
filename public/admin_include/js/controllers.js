@@ -121,14 +121,20 @@ angular
 	}
 ])
 
-.controller('DeletePageCtrl', ['$scope', '$http', '$timeout', '$window', '$document',
-	function($scope, $http, $timeout, $window, $document) {
+.controller('DeletePageCtrl', ['$scope', '$http', '$timeout',
+	function($scope, $http, $timeout) {
 		//INITIAL DATA SECTION
 		$scope.page_data = {};
 		$scope.cameAnswer = false;
 		$scope.isAllAlbumsShow = true;
 		$scope.selectAlbumId = null;
 		$scope.isAllPhotosShowInSelectAlbum = true;
+
+		$(function () {
+			//var img = '<img src="https://si0.twimg.com/a/1339639284/images/three_circles/twitter-bird-white-on-blue.png" />';
+			//var input = 
+			//$("#editButton").popover({ title: 'Редактирование', content: 'Новое название: ', , html:true });
+		})
 
 		$http.post('/admin/deletePage/getAlbum', {
 			'offset_album' : 0,
@@ -164,9 +170,6 @@ angular
 		}
 
 		$scope.$watch("selectAlbumId", function(newValue, oldValue) {
-			console.log("Зашло в наблюдатель selectAlbumId");
-			console.log(oldValue);
-			console.log(newValue);
 			if($scope.selectAlbumId != null) {
 				for (var i = 0; i < $scope.page_data.albums.length; i++) {
 					if($scope.page_data.albums[i].id == $scope.selectAlbumId) {
@@ -174,6 +177,14 @@ angular
 							$scope.isAllPhotosShowInSelectAlbum = true;
 							getMorePhotos($scope.page_data.albums[i], 6);
 						}
+
+						var inputNewTitle = '<input type="text" class="form-control input_nameAlbum" name="formInputName" ng-model="nameAlbum" ng-minlength="5" ng-maxlength="30" ng-pattern="/^[a-zA-Z]+[a-zA-Z1-9]*$/" required placeholder="пример: Album1" autofocus>';
+						$("#editButton").popover({
+							html:true,
+							title: 'Редактирование',
+							content: inputNewTitle
+						});
+
 						check_isAllPhotosShowInSelectAlbum($scope.page_data.albums[i]);
 						break;
 					}
@@ -212,10 +223,8 @@ angular
 				'id_album': id_album
 			}).success(function(data) {
 				$scope.hasActiveRequest = false;
-				if(data && data.affectedRowsAlbums > 0) {
+				if(data && data.DeletedAlbum > 0) {
 					$scope.message = 'Альбом удален.';					
-					// splice с foreachом работает не корректно нужно использовать
-					// for в обратном порядке 
 					for (var i = $scope.page_data.albums.length - 1; i >= 0; i--) {
 						if ($scope.page_data.albums[i].id == id_album) {
 							$scope.page_data.albums.splice(i, 1);
@@ -273,6 +282,10 @@ angular
 									break;
 								}
 							};
+							if($scope.page_data.albums[i].photos.length == 0 &&
+									$scope.page_data.albums[i].amount_photos > 0) {
+								more_photos(id_album);
+							}
 							break;
 						}
 					};
@@ -282,19 +295,20 @@ angular
 			});
 		}
 
-		$scope.more_photos = function(id_album) {
+		var more_photos = function(id_album) {
 			for (var i = 0; i < $scope.page_data.albums.length; i++) {
 				if($scope.page_data.albums[i].id == id_album) {
 					$scope.isAllPhotosShowInSelectAlbum = true;
-					getMorePhotos($scope.page_data.albums[i], 6);
+					getMorePhotos($scope.page_data.albums[i], 3);
 					break;
 				}
 			}				
 		}
 
-		$window.onscroll = function() {
-			if(($document.documentElement.scrollHeight - $document.documentElement.clientHeight) <= $window.pageYOffset) {
-				
+		window.onscroll = function() {
+			var isPageDown = (document.documentElement.scrollHeight - document.documentElement.clientHeight) <= window.pageYOffset;
+			if(isPageDown && !$scope.isAllPhotosShowInSelectAlbum && !$scope.hasActiveRequest) {
+				more_photos($scope.selectAlbumId);
 			}
 		}
 	}

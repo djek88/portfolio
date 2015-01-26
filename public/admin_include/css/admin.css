@@ -85,91 +85,28 @@ canvas {
 }
 
 /*//////////////////////////////////////////*/
-/*#console-tip-anchor {
-    position: fixed;
-    bottom: 0;
-    right:100px;
-    width: 10px;
-}*/
 
-/*.btn-std {
-    margin-left: 1em;
-    min-width: 100px;
-}*/
-
-/*.highlighted {
-    background-image: none;
-    background-color: honeydew !important;
-}*/
-
-
-/*.input_title_photo {
-	width: 100px;
-}*/
-/*
-#img-container {
-    margin-top: 30px;
-    margin-bottom: 30px;
-    width: 430px;
-    min-height: 300px;
-    border: 2px solid #7F8289;
-}*/
-
-/*#img-list li {*/
-	/*margin: 10px;*/
-	/*float: left;*/
-	/*width: 152px;*/
-	/*height: 90px;*/
-	/*text-align: center;*/
-	/*border: 1px solid #888888;*/
-	/*display: inline-block;*/
-/*}*/
-/*
-#img-list div.progres {
-	width: 150px;
-	border: 1px solid #888888;
-	height: 18px;
-	text-align: center;
-	background-image: url('../img/pbar_bgr.png');
-	background-repeat: no-repeat;
-	background-position: -150px center;
-}*/
-
-/*.row-pre {
-	width: 21%;
+/*EDIT PAGE*/
+.miniButton {
+	color: rgb(186, 65, 69);
+	font-size: 20px;
 }
-.row-fn {
-	width: 13%;
-}
-.row-siz {
-	width: 10%;
-}
-.row-tit {
-	width: 15%;
-}
-.row-desc {
-	width: 18%;
-}
-.row-alb {
-	width: 13%;
-}
-.row-sta {
-	width: 8%;
-}
-.row-can {
-	width: 2%;
-}*/
 
-/*.error_message {
-	color: red;
-}*/
-/*.successful-message {
-	color: green;
-}*/
+.popover {
+	background-color: #7F8289;
+}
+.popover-title {
+	background-color: #26292E;
+}
+.popover-content {
+	
+}
 
-/*.row-count-photo {
-	width: 150px;
-}*/
-/*.row-delete-button {
-	width: 100px;
-}*/
+.miniButtonRemovePhoto {
+	position: absolute;
+	right: 2px;
+	top: -15px;
+	font-size: 20px;
+	color: rgb(186, 65, 69);
+}
+/*///////////////////////////////////////////*/

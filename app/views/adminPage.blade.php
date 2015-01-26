@@ -4,8 +4,8 @@
 	<meta charset="utf-8">
 	<title>Admin Page</title>
 
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css"/>
+	<link rel="stylesheet" href="/admin_include/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+	<!-- <link rel="stylesheet" href="/admin_include/bower_components/bootstrap/dist/css/bootstrap-theme.min.css"/> -->
 	<link rel="stylesheet" href="/admin_include/css/admin.css"><!-- admin.css -->
 
 	<script src="/admin_include/bower_components/angular/angular.js"></script>
@@ -40,5 +40,7 @@
 
 	<div ng-view></div>
 
+	<script src="/admin_include/bower_components/jquery/jquery.min.js"></script>
+	<script src="/admin_include/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
