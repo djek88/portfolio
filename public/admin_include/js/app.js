@@ -6,7 +6,8 @@ angular
 
 	.module('mainModule', [
 		'ngRoute',
-		'angularFileUpload'
+		'angularFileUpload',
+		'nsPopover'
 	])
 
 	.config(['$routeProvider',

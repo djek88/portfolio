@@ -92,16 +92,6 @@ canvas {
 	font-size: 20px;
 }
 
-.popover {
-	background-color: #7F8289;
-}
-.popover-title {
-	background-color: #26292E;
-}
-.popover-content {
-	
-}
-
 .miniButtonRemovePhoto {
 	position: absolute;
 	right: 2px;

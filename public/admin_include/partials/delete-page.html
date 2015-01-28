@@ -1,9 +1,5 @@
 <div>Загружено альбомов: {{page_data.albums.length}}, Всего альбомов в бд: {{page_data.amount_albums}}</div>
 
-<!-- <button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-  Popover on right
-</button> -->
-
 <div ng-show="cameAnswer">	
 	<div class="container altern">
 		<div class="row">
@@ -36,7 +32,33 @@
 					<div class="col-md-4" align="center">
 						<h4>Удалить альбом:</h4>
 
-						<a href="" ng-disabled="hasActiveRequest" id="editButton" ng-show="(selectAlbumId != null)" data-container="body" data-toggle="popover" data-placement="left" data-content=""><span class="glyphicon glyphicon-pencil miniButton"></span></a>
+						<script type="text/ng-template" id="close">
+							<div class="triangle"></div>
+							<div class="ns-popover-tooltip">
+								<h4>
+									<strong>Новое название:</strong>
+									<a href="" id="hidePopover" ng-click="hidePopover()" style="color: rgb(186, 65, 69);	font-size: 15px;"><span class="glyphicon glyphicon-remove"></span></a>
+								</h4>							
+								<input type="text" ng-model="$parent.newNameAlbum" placeholder="пример: Album1" required autofocus>
+								<button type="button" ng-click="editNameAlbum(selectAlbumId, newNameAlbum)" ng-disabled="hasActiveRequest">Изменить</button>
+								<strong class="text-danger" ng-hide="newNameAlbumCorrect">Название не корректно!</strong>
+							</div>
+						</script>
+						<a href="" ng-show="(selectAlbumId != null)"
+							ns-popover
+							ns-popover-template="close"
+							ns-popover-trigger="click"
+							ns-popover-theme="ns-popover-tooltip-theme"
+							ns-popover-placement="left"
+							ns-popover-timeout="1000"
+							ns-popover-hide-on-inside-click="false"
+							ns-popover-hide-on-outside-click="true"
+							ns-popover-hide-on-button-click="true">
+							<span class="glyphicon glyphicon-pencil miniButton"></span>
+						</a>
+
+
+						<!-- <a href="" ng-disabled="hasActiveRequest" id="editButton" ng-show="(selectAlbumId != null)" data-container="body" data-toggle="popover" data-placement="left" data-content=""><span class="glyphicon glyphicon-pencil miniButton"></span></a> -->
 						<a href="" ng-click="deleteAlbum(selectAlbumId)" ng-disabled="hasActiveRequest" ng-show="(selectAlbumId != null)"><span class="glyphicon glyphicon-floppy-remove miniButton"></span></a>
 					</div>
 				</div>

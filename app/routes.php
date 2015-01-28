@@ -38,6 +38,10 @@ Route::post('/admin/deletePage/getPhoto', array(
 	'as'   => 'GetPhotoDeletePage',
 	'uses' => 'AdminController@getPhotoDeletePage'
 ));
+Route::post('/admin/deletePage/editAlbum', array(
+	'as'   => 'EditAlbumDeletePage',
+	'uses' => 'AdminController@editAlbumDeletePage'
+));
 Route::post('/admin/deletePage/deleteAlbum', array(
 	'as'   => 'DeleteAlbumDeletePage',
 	'uses' => 'AdminController@deleteAlbumDeletePage'

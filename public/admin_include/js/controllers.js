@@ -78,8 +78,8 @@ angular
 			var upload = fileItem.upload;
 			fileItem.upload = function() {
 				fileItem.isValidFields = (/^([a-zA-Z1-9]{5,30})$/.test(fileItem.formData[0].title) &&
-					/^([a-zA-Z1-9 ]{10,100})$/.test(fileItem.formData[0].description) &&
-					fileItem.formData[0].album != "");
+										/^([a-zA-Z1-9 ]{10,100})$/.test(fileItem.formData[0].description) &&
+										fileItem.formData[0].album != "");
 				if(fileItem.isValidFields) {
 					upload.call(fileItem);
 				} else {
@@ -130,12 +130,6 @@ angular
 		$scope.selectAlbumId = null;
 		$scope.isAllPhotosShowInSelectAlbum = true;
 
-		$(function () {
-			//var img = '<img src="https://si0.twimg.com/a/1339639284/images/three_circles/twitter-bird-white-on-blue.png" />';
-			//var input = 
-			//$("#editButton").popover({ title: 'Редактирование', content: 'Новое название: ', , html:true });
-		})
-
 		$http.post('/admin/deletePage/getAlbum', {
 			'offset_album' : 0,
 			'amount_album': 4,
@@ -178,13 +172,6 @@ angular
 							getMorePhotos($scope.page_data.albums[i], 6);
 						}
 
-						var inputNewTitle = '<input type="text" class="form-control input_nameAlbum" name="formInputName" ng-model="nameAlbum" ng-minlength="5" ng-maxlength="30" ng-pattern="/^[a-zA-Z]+[a-zA-Z1-9]*$/" required placeholder="пример: Album1" autofocus>';
-						$("#editButton").popover({
-							html:true,
-							title: 'Редактирование',
-							content: inputNewTitle
-						});
-
 						check_isAllPhotosShowInSelectAlbum($scope.page_data.albums[i]);
 						break;
 					}
@@ -206,15 +193,45 @@ angular
 		}
 
 		//ALBUM SECTION
+		$scope.newNameAlbum = "";
+		$scope.newNameAlbumCorrect = true;
 		$scope.message = "";
 		$scope.isAlbumDelete = true;
 
-		var albumNotify = function(time) {
-			$scope.isAlbumDelete = false;
-			$timeout(function() {
-				$scope.isAlbumDelete = true;
-			}, time);
-		}
+		$scope.editNameAlbum = function(idAlbum, nameAlbum) {
+			//console.log( angular.element('#hidePopover') );
+			//angular.element('#hidePopover').triggerHandler('click');
+			$scope.hasActiveRequest = true;
+			$scope.newNameAlbumCorrect = (/^[a-zA-Z]{1,1}[a-zA-Z1-9]{4,29}$/.test(nameAlbum));
+
+			if($scope.newNameAlbumCorrect) {
+				console.log("новое имя корректное");
+				$http.post('/admin/deletePage/editAlbum', {
+					'id_album'	: idAlbum,
+					'name_album': nameAlbum
+				}).success(function(data) {
+					$scope.hasActiveRequest = false;
+					if(data) {						
+						// закрыть popup
+						for (var i = 0; i < $scope.page_data.albums.length; i++) {
+							if($scope.page_data.albums[i].id == idAlbum) {
+								$scope.newNameAlbum = "";
+								$scope.page_data.albums[i].name = nameAlbum;
+
+								for (var j = 0; j < $scope.page_data.albums[i].photos.length; j++) {
+									$scope.page_data.albums[i].photos[j].name_album = nameAlbum;
+								};
+								break;
+							}
+						};
+					}
+				}).error(function(data) {
+					$scope.hasActiveRequest = false;
+				});
+			} else {
+				$scope.hasActiveRequest = false;
+			}
+		};
 
 		$scope.deleteAlbum = function(id_album) {
 			$scope.hasActiveRequest = true;

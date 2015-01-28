@@ -38,6 +38,11 @@ class Albom extends Eloquent
 		}
 	}
 
+	public static function edit_name_album($id_album, $new_name_album)
+	{
+		return Albom::where('id', '=', $id_album)->update(array('name' => $new_name_album));
+	}
+
 	public static function deleteAlbum($id_album)
 	{
 		return Albom::where('id', '=', $id_album)->delete();

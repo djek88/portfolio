@@ -201,6 +201,26 @@ class AdminController extends BaseController {
 				'albums_with_photos' => $albums_with_photos];
 	}*/
 
+	public function editAlbumDeletePage()
+	{
+		if(Input::has('id_album') && Input::has('name_album')) {
+			$id_album = (int)Input::get('id_album');			
+			$name_album = trim(Input::get('name_album'));
+
+			$valid = Validator::make(['name_album' => $name_album],
+									 ['name_album' => ['required',
+									 					'min:5',
+									 					'max:30',
+									 					'alpha_dash',
+									 					'regex:/^[a-zA-Z]+[a-zA-Z1-9]*$/',
+									 					'unique:alboms,name']
+			]);
+			if(!$valid->fails() && $id_album > 0) {
+				return Albom::edit_name_album($id_album, $name_album);
+			}
+		}
+	}
+
 	public function deleteAlbumDeletePage()
 	{
 		$id_album = Input::has('id_album') ? (int)Input::get('id_album') : -1;
