@@ -24,15 +24,6 @@ class AdminController extends BaseController {
 
 
 
-
-
-
-
-
-
-
-
-
 	public function getDataAddPage()
 	{
 		$all_albums = Albom::select_id_name_albom();
@@ -118,10 +109,6 @@ class AdminController extends BaseController {
 
 
 
-
-
-
-
 	private function getPhotosFromAlbum($id_album, $offset, $limit)
 	{
 		$name_album = Albom::get_name_album($id_album);
@@ -132,7 +119,7 @@ class AdminController extends BaseController {
 		return $data;
 	}
 
-	public function getAlbumDeletePage()
+	public function getAlbumEditPage()
 	{
 		$offset_album = Input::has('offset_album') ? (int)Input::get('offset_album') : 0;
 		$amount_album = Input::has('amount_album') ? (int)Input::get('amount_album') : 0;
@@ -161,7 +148,7 @@ class AdminController extends BaseController {
 		return $pageData;
 	}
 
-	public function getPhotoDeletePage()
+	public function getPhotoEditPage()
 	{
 		$id_album = Input::has('id_album') ? (int)Input::get('id_album') : -1;
 		$offset = Input::has('offset') ? (int)Input::get('offset') : 0;
@@ -175,33 +162,7 @@ class AdminController extends BaseController {
 		}
 	}
 
-	/*private function getDataAboutAlbums()
-	{
-		$albums_id_name = Albom::select_id_name_albom(); // array Album['id', 'name'] массив всех альбомов
-		$albums_id_count = Photo::select(DB::raw(' id_albom as id, count(id_photo) as count'))
-										->groupBy('id_albom')->get(); // array Photo['id', 'count'] массив альбомов в которых есть фотографии 
-		$albums_id_count_name = array();
-		$albums_with_photos = array();
-
-		for ($i=0; $i < count($albums_id_name); $i++) {
-			$exist = false;
-			for ($j=0; $j < count($albums_id_count); $j++) {
-				if($albums_id_name[$i]['id'] == $albums_id_count[$j]['id']) {
-					$albums_with_photos[] = $albums_id_count_name[] = ['id' => $albums_id_name[$i]['id'], 'count' => $albums_id_count[$j]['count'], 'name' => $albums_id_name[$i]['name']];
-					$exist = true;
-					break;
-				}
-			}
-			if(!$exist) {
-				$albums_id_count_name[] = ['id' => $albums_id_name[$i]['id'], 'count' => 0, 'name' => $albums_id_name[$i]['name']];
-			}
-		}
-
-		return ['all_albums' => $albums_id_count_name,
-				'albums_with_photos' => $albums_with_photos];
-	}*/
-
-	public function editAlbumDeletePage()
+	public function editAlbumEditPage()
 	{
 		if(Input::has('id_album') && Input::has('name_album')) {
 			$id_album = (int)Input::get('id_album');			
@@ -221,7 +182,7 @@ class AdminController extends BaseController {
 		}
 	}
 
-	public function deleteAlbumDeletePage()
+	public function deleteAlbumEditPage()
 	{
 		$id_album = Input::has('id_album') ? (int)Input::get('id_album') : -1;
 
@@ -249,7 +210,7 @@ class AdminController extends BaseController {
 		}
 	}
 
-	public function deletePhotoDeletePage()
+	public function deletePhotoEditPage()
 	{
 		$id_photo = Input::has('id_photo') ? (int)Input::get('id_photo') : -1;
 
@@ -267,9 +228,4 @@ class AdminController extends BaseController {
 			}
 		}
 	}
-
-	/*public function edit()
-	{
-		return "В разработке...";
-	}*/
 }

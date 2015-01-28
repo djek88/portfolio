@@ -17,10 +17,6 @@ angular
 				templateUrl: '/admin_include/partials/add-page.html',
 				controller: 'AddPageCtrl'
 			}).
-			when('/deletePage', {
-				templateUrl: '/admin_include/partials/delete-page.html',
-				controller: 'DeletePageCtrl'
-			}).
 			when('/editPage', {
 				templateUrl: '/admin_include/partials/edit-page.html',
 				controller: 'EditPageCtrl'

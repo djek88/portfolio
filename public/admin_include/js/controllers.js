@@ -121,8 +121,8 @@ angular
 	}
 ])
 
-.controller('DeletePageCtrl', ['$scope', '$http', '$timeout',
-	function($scope, $http, $timeout) {
+.controller('EditPageCtrl', ['$scope', '$http', '$timeout', '$rootScope',
+	function($scope, $http, $timeout, $rootScope) {
 		//INITIAL DATA SECTION
 		$scope.page_data = {};
 		$scope.cameAnswer = false;
@@ -130,7 +130,7 @@ angular
 		$scope.selectAlbumId = null;
 		$scope.isAllPhotosShowInSelectAlbum = true;
 
-		$http.post('/admin/deletePage/getAlbum', {
+		$http.post('/admin/editPage/getAlbum', {
 			'offset_album' : 0,
 			'amount_album': 4,
 			'amount_photo_in_album' : 0
@@ -150,7 +150,7 @@ angular
 
 		var getMorePhotos = function(album, amount_photos) {
 			$scope.hasActiveRequest = true;
-			$http.post('/admin/deletePage/getPhoto', {
+			$http.post('/admin/editPage/getPhoto', {
 				'id_album' 		: album.id,
 				'offset' 		: album.photos.length,
 				'amount_photo' 	: amount_photos
@@ -199,20 +199,18 @@ angular
 		$scope.isAlbumDelete = true;
 
 		$scope.editNameAlbum = function(idAlbum, nameAlbum) {
-			//console.log( angular.element('#hidePopover') );
-			//angular.element('#hidePopover').triggerHandler('click');
 			$scope.hasActiveRequest = true;
 			$scope.newNameAlbumCorrect = (/^[a-zA-Z]{1,1}[a-zA-Z1-9]{4,29}$/.test(nameAlbum));
 
 			if($scope.newNameAlbumCorrect) {
 				console.log("новое имя корректное");
-				$http.post('/admin/deletePage/editAlbum', {
+				$http.post('/admin/editPage/editAlbum', {
 					'id_album'	: idAlbum,
 					'name_album': nameAlbum
 				}).success(function(data) {
 					$scope.hasActiveRequest = false;
-					if(data) {						
-						// закрыть popup
+					if(data) {
+						$rootScope.$broadcast('ns:popover:hide');
 						for (var i = 0; i < $scope.page_data.albums.length; i++) {
 							if($scope.page_data.albums[i].id == idAlbum) {
 								$scope.newNameAlbum = "";
@@ -236,7 +234,7 @@ angular
 		$scope.deleteAlbum = function(id_album) {
 			$scope.hasActiveRequest = true;
 
-			$http.post('/admin/deletePage/deleteAlbum', {
+			$http.post('/admin/editPage/deleteAlbum', {
 				'id_album': id_album
 			}).success(function(data) {
 				$scope.hasActiveRequest = false;
@@ -264,7 +262,7 @@ angular
 		$scope.more_albums = function() {
 			$scope.isAllAlbumsShow = true;
 
-			$http.post('/admin/deletePage/getAlbum', {
+			$http.post('/admin/editPage/getAlbum', {
 				'offset_album' : $scope.page_data.albums.length,
 				'amount_album': 4,
 				'amount_photo_in_album' : 0
@@ -285,7 +283,7 @@ angular
 		$scope.delete_photo = function(id_album, id_photo) {
 			$scope.hasActiveRequest = true;
 
-			$http.post('/admin/deletePage/deletePhoto', {
+			$http.post('/admin/editPage/deletePhoto', {
 				'id_photo': id_photo
 			}).success(function(data) {
 				$scope.hasActiveRequest = false;
@@ -329,10 +327,4 @@ angular
 			}
 		}
 	}
-])// Реализовать пакетное удаление
-
-.controller('EditPageCtrl', ['$scope',
-	function($scope) {
-		$scope.edit = "editpage";
-	}
-]);
+]);// Реализовать пакетное удаление

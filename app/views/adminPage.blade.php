@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="/admin_include/css/nsPopover.css">
 	<link rel="stylesheet" href="/admin_include/css/admin.css"><!-- admin.css -->
 
-	<script src="/admin_include/bower_components/jquery/jquery.min.js"></script>
+	<!-- <script src="/admin_include/bower_components/jquery/jquery.min.js"></script> -->
 
 	<script src="/admin_include/bower_components/angular/angular.js"></script>
 	<script src="/admin_include/bower_components/angular-route/angular-route.js"></script>
@@ -30,7 +30,6 @@
 				<ul class="nav navbar-nav">
 					<li><a href="/">Главная</a></li>
 					<li><a href="#/addPage">Добавить</a></li>
-					<li><a href="#/deletePage">Удалить</a></li>
 					<li><a href="#/editPage">Редактировать</a></li>
 				</ul>
 			</div>

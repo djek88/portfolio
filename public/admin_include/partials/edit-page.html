@@ -1,1 +1,86 @@
-<div>{{edit}}</div>
+<div>Загружено альбомов: {{page_data.albums.length}}, Всего альбомов в бд: {{page_data.amount_albums}}</div>
+
+<div ng-show="cameAnswer">	
+	<div class="container altern">
+		<div class="row">
+			<h2 class="mainTitle">Удаление альбомов и фотографий</h2>
+
+			<div ng-hide="isAlbumDelete">
+				<div class="alert alert-warning" role="alert">{{message}}</div>
+			</div>
+
+			<div class="row" ng-hide="page_data.amount_albums">
+				<div class="bs-callout bs-callout-danger">Ни одного альбома нет. Создайте альбом.</div>
+			</div>
+
+			<div class="row" ng-show="page_data.amount_albums">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Альбомы: <small ng-hide="isAllAlbumsShow" style="float: right"><a href="" ng-click="more_albums()"><span class="glyphicon glyphicon-cloud-download miniButton"></span></a></small></h4>
+						<select class="form-control" ng-model="selectAlbumId" ng-disabled="hasActiveRequest" ng-options="album.id as album.name for album in page_data.albums">
+							<option value="" disabled>Выберете альбом...</option>
+						</select>
+					</div>
+
+					<div class="col-md-5" align="center">
+						<h4>Всего фотографий в альбоме:</h4>
+						<strong ng-repeat="album in page_data.albums | filter:filteringAlbums">
+							{{ album.amount_photos }}
+						</strong>
+					</div>
+
+					<div class="col-md-4" align="center">
+						<h4>Удалить альбом:</h4>
+
+						<script type="text/ng-template" id="close">
+							<div class="triangle"></div>
+							<div class="ns-popover-tooltip">
+								<h4>
+									<strong>Новое название:</strong>
+									<a href="" ng-click="hidePopover()" style="color: rgb(186, 65, 69);	font-size: 15px;"><span class="glyphicon glyphicon-remove"></span></a>
+								</h4>							
+								<input type="text" ng-model="$parent.newNameAlbum" placeholder="пример: Album1" required autofocus>
+								<button type="button" ng-click="editNameAlbum(selectAlbumId, newNameAlbum)" ng-disabled="hasActiveRequest">Изменить</button>
+								<strong class="text-danger" ng-hide="newNameAlbumCorrect">Название не корректно!</strong>
+							</div>
+						</script>
+						<a href="" ng-show="(selectAlbumId != null)" style="margin-left: 10px; margin-right: 10px" 
+							ns-popover
+							ns-popover-template="close"
+							ns-popover-trigger="click"
+							ns-popover-theme="ns-popover-tooltip-theme"
+							ns-popover-placement="left"
+							ns-popover-timeout="1"
+							ns-popover-hide-on-inside-click="false"
+							ns-popover-hide-on-outside-click="true"
+							ns-popover-hide-on-button-click="true">
+							<span class="glyphicon glyphicon-pencil miniButton"></span>
+						</a>						
+						<a href="" ng-click="deleteAlbum(selectAlbumId)" ng-disabled="hasActiveRequest" ng-show="(selectAlbumId != null)" style="margin-left: 10px; margin-right: 10px"><span class="glyphicon glyphicon-floppy-remove miniButton"></span></a>
+					</div>
+				</div>
+
+				<div class="row" ng-show="(selectAlbumId != null)" ng-repeat="album in page_data.albums | filter:filteringAlbums" style="border-top: 2px solid">
+					<div ng-hide="album.amount_photos">
+						<h2 class="mainTitle" style="color: rgb(186, 65, 69);">Ни одной фотографии в этом альбоме нет.</h2>
+					</div>
+
+					<div ng-show="album.amount_photos">
+						<div class="col-sm-6 col-md-4" style="margin-bottom: 30px" ng-repeat="photo in album.photos">
+							<div class="thumbnail">
+								<a href="" class="miniButtonRemovePhoto" ng-click="delete_photo(photo.id_albom, photo.id_photo)" ng-disabled="hasActiveRequest"><span class="glyphicon glyphicon-remove"></span></a>
+								<img style="height: 350px;" ng-src="{{photo.reference_img}}">
+								<div class="caption">
+									<h3>{{photo.title}}</h3>
+									<p>{{photo.description}}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div>Данные страницы</div>
+<pre>{{ page_data | json }}</pre><br>

@@ -19,6 +19,7 @@ Route::get('/admin', array(
 	'as'		=> 'AdminPage',
 	'uses'		=> 'AdminController@adminPage'
 ));
+
 Route::get('/admin/addPage', array(
 	'before'	=> 'isAuth',
 	'as'		=> 'GetDataAddPage',
@@ -29,29 +30,24 @@ Route::post('/admin/addPage', array(
 	'uses' => 'AdminController@saveDataAddPage'
 ));
 
-Route::post('/admin/deletePage/getAlbum', array(
+Route::post('/admin/editPage/getAlbum', array(
 	'before'	=> 'isAuth',
-	'as'		=> 'GetAlbumDeletePage',
-	'uses'		=> 'AdminController@getAlbumDeletePage'
+	'as'		=> 'GetAlbumEditPage',
+	'uses'		=> 'AdminController@getAlbumEditPage'
 ));
-Route::post('/admin/deletePage/getPhoto', array(
-	'as'   => 'GetPhotoDeletePage',
-	'uses' => 'AdminController@getPhotoDeletePage'
+Route::post('/admin/editPage/getPhoto', array(
+	'as'   => 'GetPhotoEditPage',
+	'uses' => 'AdminController@getPhotoEditPage'
 ));
-Route::post('/admin/deletePage/editAlbum', array(
-	'as'   => 'EditAlbumDeletePage',
-	'uses' => 'AdminController@editAlbumDeletePage'
+Route::post('/admin/editPage/editAlbum', array(
+	'as'   => 'EditAlbumEditPage',
+	'uses' => 'AdminController@editAlbumEditPage'
 ));
-Route::post('/admin/deletePage/deleteAlbum', array(
+Route::post('/admin/editPage/deleteAlbum', array(
 	'as'   => 'DeleteAlbumDeletePage',
-	'uses' => 'AdminController@deleteAlbumDeletePage'
+	'uses' => 'AdminController@deleteAlbumEditPage'
 ));
-Route::post('/admin/deletePage/deletePhoto', array(
+Route::post('/admin/editPage/deletePhoto', array(
 	'as'   => 'DeletePhotoDeletePage',
-	'uses' => 'AdminController@deletePhotoDeletePage'
+	'uses' => 'AdminController@deletePhotoEditPage'
 ));
-
-/*Route::post('/admin/deletePage/more', array(
-	'as'   => 'MorePhotosDeletePage',
-	'uses' => 'AdminController@morePhotosDeletePage'
-));*/
