@@ -47,6 +47,10 @@ Route::post('/admin/editPage/deleteAlbum', array(
 	'as'   => 'DeleteAlbumDeletePage',
 	'uses' => 'AdminController@deleteAlbumEditPage'
 ));
+Route::post('/admin/editPage/editPhoto', array(
+	'as'   => 'EditPhotoEditPage',
+	'uses' => 'AdminController@editPhotoEditPage'
+));
 Route::post('/admin/editPage/deletePhoto', array(
 	'as'   => 'DeletePhotoDeletePage',
 	'uses' => 'AdminController@deletePhotoEditPage'

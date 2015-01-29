@@ -210,6 +210,11 @@ class AdminController extends BaseController {
 		}
 	}
 
+	public function editPhotoEditPage()
+	{
+		return Input::all();
+	}
+
 	public function deletePhotoEditPage()
 	{
 		$id_photo = Input::has('id_photo') ? (int)Input::get('id_photo') : -1;

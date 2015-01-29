@@ -192,18 +192,30 @@ angular
 			return album.id === $scope.selectAlbumId;
 		}
 
-		//ALBUM SECTION
+		// ALBUM SECTION
 		$scope.newNameAlbum = "";
-		$scope.newNameAlbumCorrect = true;
+		$scope.newNameAlbumCorrect = true;		
 		$scope.message = "";
 		$scope.isAlbumDelete = true;
 
+		var albumNotify = function(time) {
+			$scope.isAlbumDelete = false;
+			$timeout(function() {
+				$scope.isAlbumDelete = true;
+			}, time);
+		}
+
 		$scope.editNameAlbum = function(idAlbum, nameAlbum) {
 			$scope.hasActiveRequest = true;
-			$scope.newNameAlbumCorrect = (/^[a-zA-Z]{1,1}[a-zA-Z1-9]{4,29}$/.test(nameAlbum));
+			for (var i = 0; i < $scope.page_data.albums.length; i++) {
+				if($scope.page_data.albums[i].id == idAlbum) {
+					var oldNameAlbum = $scope.page_data.albums[i].name;
+					break;
+				}
+			};
+			$scope.newNameAlbumCorrect = (nameAlbum != oldNameAlbum && /^[a-zA-Z]{1,1}[a-zA-Z1-9]{4,29}$/.test(nameAlbum));
 
 			if($scope.newNameAlbumCorrect) {
-				console.log("новое имя корректное");
 				$http.post('/admin/editPage/editAlbum', {
 					'id_album'	: idAlbum,
 					'name_album': nameAlbum
@@ -279,6 +291,42 @@ angular
 		}
 
 		// PHOTO SECTION
+		$scope.newTitlePhoto = "";
+		$scope.newDescriptionPhoto = "";
+		$scope.isSelectDescription = false;
+		$scope.newTitleDescriptionCorrect = true;
+
+		$scope.editPhoto = function(idPhoto, titlePhoto, descriptionPhoto, oldTitlePhoto, oldDescriptionPhoto) {
+			$scope.hasActiveRequest = true;
+
+			var titleCorrect = (titlePhoto != oldTitlePhoto && /^([a-zA-Z1-9]{5,30})$/.test(titlePhoto));
+			var descriptionCorrect = (descriptionPhoto != oldDescriptionPhoto && /^([a-zA-Z1-9 ]{10,100})$/.test(descriptionPhoto));
+
+			if(!$scope.isSelectDescription && titleCorrect) {
+				$scope.newTitleDescriptionCorrect = true;
+			} else if($scope.isSelectDescription && titleCorrect && descriptionCorrect) {
+				var sendDescPhoto = descriptionPhoto;
+				$scope.newTitleDescriptionCorrect = true;
+			} else {
+				$scope.hasActiveRequest = false;
+				$scope.newTitleDescriptionCorrect = false;
+				return;
+			}
+
+			console.log("message");
+			/*$http.post('/admin/editPage/editPhoto', {
+				'id_album'			: idAlbum,
+				'id_Photo'			: idPhoto,
+				'title_photo'		: titlePhoto,
+				'description_photo'	: sendDescPhoto
+			}).success(function(data) {
+				$scope.hasActiveRequest = false;
+				console.log(data);
+
+			}).error(function(data) {
+				$scope.hasActiveRequest = false;
+			});*/
+		}
 
 		$scope.delete_photo = function(id_album, id_photo) {
 			$scope.hasActiveRequest = true;
