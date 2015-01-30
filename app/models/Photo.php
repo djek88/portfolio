@@ -41,6 +41,14 @@ class Photo extends Eloquent
 	{
 		return Photo::where('id_albom', '=', $id_album)->delete();
 	}
+	
+	public static function edit_title_description($id_Photo, $new_title_photo, $new_description_photo = false)
+	{
+		if(!$new_description_photo) {
+			return Photo::where('id_photo', '=', $id_Photo)->update(array('title' => $new_title_photo));
+		}
+		return Photo::where('id_photo', '=', $id_Photo)->update(array('title' => $new_title_photo, 'description' => $new_description_photo));
+	}
 
 	public static function deletePhoto($id_photo)
 	{

@@ -296,7 +296,7 @@ angular
 		$scope.isSelectDescription = false;
 		$scope.newTitleDescriptionCorrect = true;
 
-		$scope.editPhoto = function(idPhoto, titlePhoto, descriptionPhoto, oldTitlePhoto, oldDescriptionPhoto) {
+		$scope.editPhoto = function(idAlbum, idPhoto, titlePhoto, descriptionPhoto, oldTitlePhoto, oldDescriptionPhoto) {
 			$scope.hasActiveRequest = true;
 
 			var titleCorrect = (titlePhoto != oldTitlePhoto && /^([a-zA-Z1-9]{5,30})$/.test(titlePhoto));
@@ -304,28 +304,45 @@ angular
 
 			if(!$scope.isSelectDescription && titleCorrect) {
 				$scope.newTitleDescriptionCorrect = true;
-			} else if($scope.isSelectDescription && titleCorrect && descriptionCorrect) {
-				var sendDescPhoto = descriptionPhoto;
+			}
+			else if($scope.isSelectDescription && titleCorrect && descriptionCorrect) {
+				var sendDescriptionPhoto = descriptionPhoto;
 				$scope.newTitleDescriptionCorrect = true;
-			} else {
+			}
+			else {
 				$scope.hasActiveRequest = false;
 				$scope.newTitleDescriptionCorrect = false;
 				return;
 			}
 
-			console.log("message");
-			/*$http.post('/admin/editPage/editPhoto', {
-				'id_album'			: idAlbum,
+			$http.post('/admin/editPage/editPhoto', {
 				'id_Photo'			: idPhoto,
 				'title_photo'		: titlePhoto,
-				'description_photo'	: sendDescPhoto
+				'description_photo'	: sendDescriptionPhoto
 			}).success(function(data) {
 				$scope.hasActiveRequest = false;
-				console.log(data);
+				if(data) {
+					$rootScope.$broadcast('ns:popover:hide');
+					$scope.newTitlePhoto = "";
+					$scope.newDescriptionPhoto = "";					
+					$scope.isSelectDescription = false;
 
+					for (var i = 0; i < $scope.page_data.albums.length; i++) {
+						if($scope.page_data.albums[i].id == idAlbum) {
+							for (var j = 0; j < $scope.page_data.albums[i].photos.length; j++) {
+								if($scope.page_data.albums[i].photos[j].id_photo == idPhoto) {
+									$scope.page_data.albums[i].photos[j].title = titlePhoto;
+									$scope.page_data.albums[i].photos[j].description = sendDescriptionPhoto !== undefined ? sendDescriptionPhoto : oldDescriptionPhoto;
+								}
+								break;
+							};
+						}
+						break;
+					};
+				}
 			}).error(function(data) {
 				$scope.hasActiveRequest = false;
-			});*/
+			});
 		}
 
 		$scope.delete_photo = function(id_album, id_photo) {

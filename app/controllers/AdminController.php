@@ -176,7 +176,7 @@ class AdminController extends BaseController {
 									 					'regex:/^[a-zA-Z]+[a-zA-Z1-9]*$/',
 									 					'unique:alboms,name']
 			]);
-			if(!$valid->fails() && $id_album > 0) {
+			if(!$valid->fails() && $id_album >= 0) {
 				return Albom::edit_name_album($id_album, $name_album);
 			}
 		}
@@ -212,7 +212,26 @@ class AdminController extends BaseController {
 
 	public function editPhotoEditPage()
 	{
-		return Input::all();
+		if(Input::has('id_Photo') && Input::has('title_photo')) {
+			$id_Photo = (int)Input::get('id_Photo');
+			$title_photo = trim(Input::get('title_photo'));
+			$description_photo = Input::has('description_photo') ? trim(Input::get('description_photo')) : "";
+
+			$title_valid = Validator::make(
+				['title'    => $title_photo],
+				['title'    => ['regex:/^([a-zA-Z1-9]{5,30})$/']]
+			);
+			$description_valid = Validator::make(
+				['description' => $description_photo],
+				['description' => ['required', 'regex:/^([a-zA-Z1-9 ]{10,100})$/']]
+			);
+
+			if(!$title_valid->fails() && !$description_valid->fails() && $id_Photo >= 0){
+				return Photo::edit_title_description($id_Photo, $title_photo, $description_photo);
+			} else if(!$title_valid->fails() && $id_Photo >= 0) {
+				return Photo::edit_title_description($id_Photo, $title_photo);
+			}
+		}
 	}
 
 	public function deletePhotoEditPage()

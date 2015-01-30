@@ -50,9 +50,9 @@
 							ns-popover-trigger="click"
 							ns-popover-theme="ns-popover-tooltip-theme"
 							ns-popover-placement="left"
-							ns-popover-timeout="1"
+							ns-popover-timeout="1000"
 							ns-popover-hide-on-inside-click="false"
-							ns-popover-hide-on-outside-click="true"
+							ns-popover-hide-on-outside-click="false"
 							ns-popover-hide-on-button-click="true">
 							<span class="glyphicon glyphicon-pencil miniButton"></span>
 						</a>						
@@ -78,8 +78,8 @@
 											<input type="checkbox" ng-model="$parent.$parent.$parent.isSelectDescription">
 										</h5>
 										<input type="text" ng-model="$parent.$parent.$parent.newDescriptionPhoto" ng-disabled="!isSelectDescription" placeholder="..."><br><br>
-										<button type="button" ng-disabled="hasActiveRequest" ng-click="editPhoto(photo.id_photo, $parent.newTitlePhoto, $parent.newDescriptionPhoto, photo.title, photo.description)">Изменить</button>
-										<button type="button" ng-click="hidePopover()">Отменить</button>
+										<button type="button" ng-disabled="hasActiveRequest" ng-click="editPhoto(photo.id_albom, photo.id_photo, $parent.$parent.$parent.newTitlePhoto, $parent.$parent.$parent.newDescriptionPhoto, photo.title, photo.description)">Изменить</button>
+										<button type="button" ng-click="hidePopover()">Отменить</button><br>
 										<strong class="text-danger" ng-hide="newTitleDescriptionCorrect">Данные не коректны!</strong>
 									</div>
 								</script>
