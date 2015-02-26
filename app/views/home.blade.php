@@ -5,7 +5,7 @@
 	<!-- Meta Tags -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-	<title>||||||</title>   
+	<title>Success</title>   
 
 	<meta name="description" content="Insert Your Site Description" /> 
 
@@ -196,8 +196,8 @@
 		    <div class="row">
 		        <div class="span12">
 		            <div class="title-page">
-		                <h2 class="title">About Us</h2>
-		                <h3 class="title-description">Learn About our Team &amp; Culture.</h3>
+		                <h2 class="title">Обо мне</h2>
+		                <h3 class="title-description">Мои старания для вас...</h3>
 		            </div>
 		        </div>
 		    </div>
@@ -254,10 +254,10 @@
 		        	<div class="contact-details">
 			        	<div class="title-page">
 			                <ul>
-			                    <li><a href="#">hello@brushed.com</a></li>
+			                    <li><a href="#">hello@portfolio.ru</a></li>
 			                    <li>(916) 375-2525</li>
 			                    <li>
-			                        Brushed Studio
+			                        Djek88
 			                        <br>
 			                        5240 Vanish Island. 105
 			                        <br>
@@ -295,7 +295,7 @@
 
 	<!-- Footer -->
 	<footer>
-		<p class="credits">&copy;2013 Brushed. <a href="http://themes.alessioatzeni.com/html/brushed/" title="Brushed | Responsive One Page Template">Brushed Template</a> by <a href="http://www.alessioatzeni.com/" title="Alessio Atzeni | Web Designer &amp; Front-end Developer">Alessio Atzeni</a> & <a href="http://lab.yurbasik.org.ua/">LAB</a></p>
+		<p class="credits">&copy;2014 Success. <a href="#" title="Complite | Responsive One Page Template">Djek88 Template</a></p>
 	</footer>
 	<!-- End Footer -->
 

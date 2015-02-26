@@ -54,7 +54,7 @@ BRUSHED.slider = function(){
 		start_slide             :   1,			// Start slide (0 is random)
 		stop_loop				:	0,			// Pauses slideshow on last slide
 		random					: 	0,			// Randomize slide order (Ignores start slide)
-		slide_interval          :   1000,		// Length between transitions
+		slide_interval          :   4000,		// Length between transitions
 		transition              :   1, 			// 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
 		transition_speed		:	1000,		// Speed of transition
 		new_window				:	1,			// Image links open in new window/tab
@@ -77,9 +77,9 @@ BRUSHED.slider = function(){
 		thumb_links				:	0,			// Individual thumb links for each slide
 		thumbnail_navigation    :   0,			// Thumbnail navigation
 		slides 					:  	[			// Slideshow Images
-											{image : '_include/img/slider-images/image05.jpg', title : '<div class="slide-content">8888</div>', thumb : '', url : ''},
-											{image : '_include/img/slider-images/image06.jpg', title : '<div class="slide-content">8888</div>', thumb : '', url : ''},
-											{image : '_include/img/slider-images/image07.jpg', title : '<div class="slide-content">8888</div>', thumb : '', url : ''}  
+											{image : '_include/img/slider-images/image05.jpg', title : '<div class="slide-content">Создавай</div>', thumb : '', url : ''},
+											{image : '_include/img/slider-images/image06.jpg', title : '<div class="slide-content">Наслаждайся</div>', thumb : '', url : ''},
+											{image : '_include/img/slider-images/image07.jpg', title : '<div class="slide-content">Изменяй</div>', thumb : '', url : ''}  
 									],
 									
 		// Theme Options			   

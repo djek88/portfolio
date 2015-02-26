@@ -30,7 +30,7 @@
 		<div class="container">
 			<form class="form-signin" role="form" action="{{ URL::route('loginPageAdmin') }}" method="post">
 				<h2 class="form-signin-heading">Please sign in</h2>
-				<input name="login" type="login" class="form-control" placeholder="User" required autofocus>
+				<input name="login" type="text" class="form-control" placeholder="User" required autofocus>
 				<input name="password" type="password" class="form-control" placeholder="Password" required>
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 			</form>
